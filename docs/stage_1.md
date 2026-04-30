@@ -2,24 +2,23 @@
 
 ## 0. Team Formation
 
-- **Initial Meeting**: Team members introduced themselves, shared backgrounds, strengths, and interests.
-- **Temporary Project Manager**: Virginie coordinates Stage 1.
+- **Initial Meeting**: Team members introduced themselves, shared backgrounds, strengths, weaknesses and interests.
+- **Project Manager**: Virginie Lombarte.
 - **Team Norms**:
   - Communication via **Discord** (dedicated project channel).
   - Documentation centralized on **Notion**.
   - Version control on **GitLab** (repository provided by the maintainer).
   - Weekly sync every Monday (30 min).
-  - Demos on **staging only** — no "works on my machine" presentations.
   - Working language: French for project communication; English for code, commits, and technical reviews.
 
-> ⚠️ The team is composed of 2 students. No additional candidates were available in the cohort. The final technical role split will be confirmed at the official kickoff with the maintainer.
+> ⚠️ The team is composed of 2 students since the requirement was to get into teams of 2 to 3 people. The final technical role split will be confirmed at the official kickoff with the maintainer.
 
 ### 👥 Team Members
 
 | Member | Provisional Role | Key Skills |
 |---|---|---|
-| Allix Robin | Frontend Developer | HTML/CSS, JS, Typescript, Nuxt3 |
-| Virginie Lombarte | Backend Developer Lead | Python/Flask, SQL, CTF (OSINT, forensics, steganography) |
+| Allix Robin | Frontend Developer | HTML/CSS, JS, Typescript, Nuxt3, Data Analysis |
+| Virginie Lombarte | Backend Developer/Lead | Python/Flask, SQL, CTF (OSINT, forensics, steganography) |
 
 ### 🤝 Stakeholders
 
@@ -40,7 +39,7 @@
   - **"How Might We" Questions**:
     - How might we make Orekit's capabilities immediately tangible to a new visitor?
     - How might we make the site easy to maintain with a small contributor base?
-    - How might we satisfy school requirements (database, backend) while delivering real value?
+    - How might we satisfy school requirements (database, backend) while delivering real added value?
 
 ---
 
@@ -140,7 +139,7 @@ Deliver a full CI/CD pipeline, a complete runbook, and a backup restore drill va
 
 ### Selected MVP Summary
 
-- **Rationale**: Achievable within the 10-week dev window, aligned with a real maintainer's needs, and satisfies all Holberton school requirements natively. The clearly bounded v1 scope limits drift risk for a 2-person team.
+- **Rationale**: Achievable within the 10-week dev window, aligned with a real maintainer's needs, and satisfies all Holberton school requirements. The clearly bounded v1 scope limits drift risk for a 2-person team.
 - **Potential Impact**: A modern, maintainable site that makes Orekit's capabilities immediately visible — improving first impressions for new users and reducing maintenance burden for the long-term contributor base.
 
 ---
