@@ -91,29 +91,32 @@
 
 ### 🔑 Key Features (SMART Objectives)
 
-**Feature 1 — Full Orekit Content Migration 🔴**
-Migrate all 117 Orekit blog posts and all static pages to Nuxt 3 / `@nuxt/content`, with Atom and RSS feed regeneration, **by end of Week 6 (June 12, 2026)** — measured by a full URL audit with zero 404s.
+**Feature 1 — Orekit Static Pages Migration 🔴**
+Migrate all Orekit static pages (landing, overview, governance, publications, license, community, download, support, resources, doc-*) to Nuxt 3 / `@nuxt/content`, with version-aware download/doc pages, **by end of Week 10 (July 17, 2026)** — measured by a full URL audit with zero 404s.
 
 **Feature 2 — TLE API & 3D Satellite Visualizer 🔴**
-Deploy on staging a FastAPI backend ingesting TLE data and a CesiumJS globe displaying satellite positions with a time cursor, **by end of Week 9 (July 6, 2026)** — measured by API load test (< 500ms p95) and Lighthouse performance score ≥ 80.
+Publish a FastAPI backend container image ingesting TLE data and a CesiumJS globe displaying satellite positions with a time cursor embedded as the landing page hero, **by end of Week 8 (July 3, 2026)** — measured by API load test (< 500ms p95) and Lighthouse performance score ≥ 80.
 
-**Feature 3 — CI/CD Pipeline & Secure Handover 🔴**
-Deliver a full CI/CD pipeline, a complete runbook, and a backup restore drill validated by Vincent, **by July 19, 2026**.
+**Feature 3 — CI Pipeline & Handover 🔴**
+Deliver a CI pipeline publishing a static frontend artefact and a backend Docker image, a complete applicative runbook, and transfer of repo and CI access to Vincent, **by July 19, 2026**.
 
 ### 📦 Scope
 
 #### In-Scope (v1)
-- ✅ Nuxt 3 static site — all current Orekit pages
-- ✅ News index (`/news`) with Atom and RSS feeds
-- ✅ 117 Orekit blog posts migrated *(15 Rugged posts remain on Jekyll)*
-- ✅ CesiumJS 3D satellite visualizer with time cursor
+- ✅ Nuxt 3 static site — all current Orekit static pages
+- ✅ CesiumJS 3D satellite visualizer with time cursor, embedded as landing page hero
 - ✅ FastAPI backend + PostgreSQL TLE database (Celestrak ingestion, read-only REST API)
-- ✅ Full CI/CD pipeline — static build + rsync deployment
-- ✅ Caddy reverse proxy with automatic HTTPS
+- ✅ CI pipeline — frontend static artefact + backend Docker image published
 - ✅ Preservation of `mvn-sites` symlink scheme (per-version Javadoc)
-- ✅ Runbook, security docs, threat model, OpenAPI spec
+- ✅ Runbook (`docs/RUNBOOK.md`), security checklist (`docs/security.md`), OpenAPI spec
+
+#### Stretch Goals (priorités décroissantes)
+- 🟣 Migration des 117 billets Orekit, index `/news`, flux Atom et RSS *(tant que non migrés, Jekyll reste autoritaire)*
+- 🟣 Migration du sous-site Rugged (`/rugged/*`) et ses 15 billets
+- 🟣 Reste — au choix de l'équipe en fonction du temps disponible
 
 #### Out-of-Scope (v1)
+- ❌ Déploiement, reverse proxy, terminaison TLS, sauvegardes, monitoring — responsabilité du mainteneur
 - ❌ Admin UI for blog posts *(deferred to v2)*
 - ❌ Authentication, sessions, user accounts
 - ❌ File or image uploads
@@ -122,7 +125,6 @@ Deliver a full CI/CD pipeline, a complete runbook, and a backup restore drill va
 - ❌ Mobile application
 - ❌ WebSocket / real-time *(TLE ingestion via cron only)*
 - ❌ Analytics or third-party trackers
-- ❌ Rugged sub-site migration *(stretch goal only)*
 - ❌ GraphQL, microservices, Kubernetes
 
 ---
