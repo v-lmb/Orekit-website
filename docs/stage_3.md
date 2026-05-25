@@ -52,7 +52,7 @@ The following wireframes describe the layout and structure of the main screens. 
 
 #### Landing Page (`/`)
 
-PLACE POUR MOCKUPS
+![Landing page](image.png)
 
 Key constraints:
 - The CesiumJS viewer is loaded on first paint — no lazy-load gate (V-10).
@@ -62,21 +62,15 @@ Key constraints:
 
 ---
 
-#### Download Page (`/download`)
+#### API Documentation (`/doc-javadoc`)
 
-PLACE POUR MOCKUPS
-
----
-
-#### Documentation Index (`/doc-javadoc`, `/doc-maven`, `/doc-tutorials`)
-
-PLACE POUR MOCKUPS
+![API Documentation](image.png)
 
 ---
 
 #### News Index (`/news`) — stretch goal
 
-PLACE POUR MOCKUPS
+![News](image-1.png)
 
 ---
 
