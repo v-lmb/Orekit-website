@@ -52,7 +52,7 @@ The following wireframes describe the layout and structure of the main screens. 
 
 #### Landing Page (`/`)
 
-![Landing page](image.png)
+![Landing page](Landing page.png)
 
 Key constraints:
 - The CesiumJS viewer is loaded on first paint — no lazy-load gate (V-10).
@@ -64,13 +64,13 @@ Key constraints:
 
 #### API Documentation (`/doc-javadoc`)
 
-![API Documentation](image.png)
+![API Documentation](API Documentation.png)
 
 ---
 
 #### News Index (`/news`) — stretch goal
 
-![News](image-1.png)
+![News](News.png)
 
 ---
 
