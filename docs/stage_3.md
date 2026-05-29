@@ -137,7 +137,7 @@ Reverse proxy, TLS termination, hosting, backups, and production deployment are 
 | `SatelliteViewer.vue` | `apps/web/components/SatelliteViewer.vue` | CesiumJS globe. Fetches TLE list from the API on mount, propagates positions client-side with `satellite.js`, renders time-dynamic entities. Exposes play/pause, time indicator, speed selector (V-3). Shows empty state on API failure (V-9). Loaded on first paint, no lazy-load gate (V-10). |
 | `UsedByCarousel.vue` | `apps/web/components/UsedByCarousel.vue` | Auto-rotating carousel. Pauses on hover/focus, has explicit play/pause control, respects `prefers-reduced-motion`. Data sourced from `content/used-by.yml` (LP-4). |
 | `SponsorsSection.vue` | `apps/web/components/SponsorsSection.vue` | Static list of sponsors with logo, name, and link. Data from `content/sponsors.yml` (LP-5). |
-| `NewsPreview.vue` | `apps/web/components/NewsPreview.vue` | Shows the N most recent posts with title, date, and excerpt. Stretch — only rendered if posts are migrated (LP-6). |
+| `NewsPreview.vue` | `apps/web/components/NewsPreview.vue` | Shows the most recent post with title, date, and excerpt. Stretch — only rendered if posts are migrated (LP-6). |
 | `VersionDownload.vue` | `apps/web/components/VersionDownload.vue` | Version-aware download/doc table. Reads `_data/orekit/versions.yml` at static-generation time (P-4). |
 | `AppNav.vue` | `apps/web/components/AppNav.vue` | Global navigation bar. Responsive, keyboard-navigable. |
 
