@@ -1,0 +1,26 @@
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: orekit
+      POSTGRES_PASSWORD: changeme
+      POSTGRES_DB: orekit
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  api:
+    build:
+      context: ../apps/api
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql://orekit:changeme@db:5432/orekit
+      context: ../apps/api
+
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:
