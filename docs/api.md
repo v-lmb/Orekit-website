@@ -15,13 +15,32 @@ URL: `http://127.0.0.1:8001/health`
 Returns all TLEs.\
 Filter by group using the `?group=stations` option.
 
-	
+Example:\
+Request URL\
+`http://127.0.0.1:8001/api/tle?group=stations`
+
+Response:
+```
+[
+  {
+    "id": 1,
+    "satellite_id": "25544",
+    "name": "ISS (ZARYA)",
+    "line1": "1 25544U 98067A   26154.96745432  .00008451  00000+0  15807-3 0  9999",
+    "line2": "2 25544  51.6330   5.5404 0007082 130.0270 230.1341 15.49590346569705",
+    "source_group": "stations",
+    "ingested_at": "2026-06-03T16:33:56.520906+00:00"
+  }
+]
+```
+
+
 ## GET /api/tle/{satellite_id}
-Returns a specific satellite
+Returns a specific satellite.
 
 Example:\
 Request URL\
-`http://127.0.0.1:8001/api/tle/25544`\
+`http://127.0.0.1:8001/api/tle/25544`
 
 Response:
 ```
