@@ -3,8 +3,21 @@ from sqlalchemy.orm import Session
 from sqlalchemy import text
 from database import SessionLocal
 from models import Tle
+from contextlib import asynccontextmanager
+from apscheduler.schedulers.background import BackgroundScheduler
+from ingest import ingest
 
-app = FastAPI()
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    scheduler = BackgroundScheduler()
+    scheduler.add_job(ingest, "interval", hours=6)
+    scheduler.start()
+    yield
+    scheduler.shutdown()
+
+
+app = FastAPI(lifespan=lifespan)
 
 
 def get_db():
@@ -22,6 +35,11 @@ def get_db():
 
 @app.get("/health")
 def health(db: Session = Depends(get_db)):
+    """
+    executes a simple query to verify that the database responds
+    return: {“status”: “okay”}
+    otherwise, return a 500 error
+    """
     db.execute(text("SELECT 1"))
     return {"status": "okay"}
 
