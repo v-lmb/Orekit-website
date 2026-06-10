@@ -32,13 +32,49 @@ cp .env.example .env
 | `CI_REGISTRY_IMAGE` | Path to the Docker image in the registry (CI only) | `ghcr.io/org/orekit-website` |
 
 ## 3.Local startup (Docker Compose)
-<!-- à compléter -->
+Run all commands from the project root unless stated otherwise.
+
+- Start the database
+```bash
+docker compose -f compose/docker-compose.yml up -d
+```
+
+- Activate the Python environment
+```bash               
+cd apps/api && source venv/bin/activate
+```
+
+- Start the API
+```bash
+uvicorn main:app --reload
+```
+
+To verify the API is running, open http://localhost:8001/health in your
+browser or run:
+```bash
+curl http://localhost:8001/health
+```
+Expected response: `{"status": "okay"}`
+
 
 ## 4.Alembic migrations
-<!-- à compléter -->
+Run the following commands from `apps/api/`
+- If this is the first time the project is being installed
+```bash
+pip install -r requirements.txt
+```
+
+- Apply the Alembic migrations
+```bash
+alembic upgrade head
+```
 
 ## 5.TLE ingestion
-<!-- à compléter -->
+Run the following commands from `apps/api/`
+- Fetches TLE data from Celestrak and stores it in the database
+```bash
+python ingest.py
+```
 
 ## 6.Deployment (maintainer-side)
 <!-- à compléter -->
