@@ -10,13 +10,18 @@ from ingest import ingest
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    """
+    Manages the application lifecycle,
+    starts the scheduler on startup and shuts it down on exit
+    """
     scheduler = BackgroundScheduler()
     scheduler.add_job(ingest, "interval", hours=6)
-    scheduler.start()
+    scheduler.start()  # starts the scheduler when the API starts
     yield
-    scheduler.shutdown()
+    scheduler.shutdown()  # properly shuts down the scheduler when the API is shut down
 
 
+# registers the lifespan handler for startup/shutdown events
 app = FastAPI(lifespan=lifespan)
 
 
@@ -35,17 +40,14 @@ def get_db():
 
 @app.get("/health")
 def health(db: Session = Depends(get_db)):
-    """
-    executes a simple query to verify that the database responds
-    return: {“status”: “okay”}
-    otherwise, return a 500 error
-    """
+    """ Checks that the API is running and the database responds """
     db.execute(text("SELECT 1"))
     return {"status": "okay"}
 
 
 @app.get("/api/tle")
 def list_tle(group: str = None, db: Session = Depends(get_db)):
+    """ Returns all TLEs, optionally filtered by group """
     query = db.query(Tle)
     if group:
         query = query.filter(Tle.source_group == group)
@@ -54,6 +56,7 @@ def list_tle(group: str = None, db: Session = Depends(get_db)):
 
 @app.get("/api/tle/{satellite_id}")
 def get_tle(satellite_id: str, db: Session = Depends(get_db)):
+    """Returns a single TLE by satellite ID, or 404 if not found"""
     tle = db.query(Tle).filter(Tle.satellite_id == satellite_id).first()
     if tle is None:
         raise HTTPException(status_code=404, detail="Satellite not found")
