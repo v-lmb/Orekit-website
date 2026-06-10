@@ -80,7 +80,36 @@ python ingest.py
 <!-- à compléter -->
 
 ## 7.Logs
-<!-- à compléter -->
+Run all commands from the project root unless stated otherwise.\
+View API logs in real time:
+```bash
+docker compose logs -f api
+```
+
+Displays the logs for the PostgreSQL container:
+```bash
+docker compose logs -f db
+```
+
+Options:
+- `-f` : monitors logs in real time
+- `--tail=100` : displays the last 100 lines
 
 ## 8.Common issues
-<!-- à compléter -->
+### Problem 1 : The database won't start
+**Symptom :** The API returns a connection error; /health fails\
+**Cause :** Docker Compose is not running\
+**Solution :** Run Docker Compose from root 
+```bash
+docker compose -f compose/docker-compose.yml up -d
+```
+
+### Problem 2 : Celestrak 403
+**Symptom :** Celestrak returns a 403 error\
+**Cause :** Rate limit\
+**Solution :** Wait a few minutes and try again
+
+### Problem 3 : API crashes on startup
+**Symptom :** The API crashes on startup with a `KeyError: DATABASE_URL` error\
+**Cause :** .env file is missing or misconfigured\
+**Solution :** Copy `.env.example` to `.env` and fill in the correct values (see §2.Environment variables)
