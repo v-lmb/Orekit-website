@@ -18,6 +18,22 @@ jobs:
       - run: pip install ruff
       - run: ruff check apps/api/
 
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - run: pip install -r apps/api/requirements.txt
+
+      - run: python -m pytest tests/ -v
+        working-directory: apps/api
+        env:
+          DATABASE_URL: postgresql://dummy
+
   build:
     runs-on: ubuntu-latest
     steps:

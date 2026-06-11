@@ -5,6 +5,10 @@ from database import Base
 
 
 class Tle(Base):
+    """
+    SQLAlchemy model for the tle table
+    Stores TLE data ingested from Celestrak
+    """
     __tablename__ = "tle"
 
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -18,6 +22,7 @@ class Tle(Base):
         default=lambda: datetime.now(timezone.utc)
     )
 
+    # a satellite can appear in multiple groups, uniqueness is defined for each pair (satellite, group)
     __table_args__ = (
         UniqueConstraint("satellite_id", "source_group"),
     )
