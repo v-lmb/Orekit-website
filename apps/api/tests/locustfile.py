@@ -2,7 +2,7 @@ from locust import HttpUser, task, between
 
 
 class TleApiUser(HttpUser):
-    host = "http://localhost:8001"
+    host = "http://localhost:8000"
     wait_time = between(1, 3)
 
     @task(1)
