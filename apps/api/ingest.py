@@ -35,13 +35,14 @@ def parse_tle(text: str, group: str) -> list[dict]:
         name = lines[i].strip()
         line1 = lines[i + 1].strip()
         line2 = lines[i + 2].strip()
-        satellite_id = line1[2:7].strip()  # NORAD ID is ta fixed posistions 2-7 in line 1
+        satellite_id = line1[2:7].strip()  # NORAD ID is at fixed posistions 2-7 in line 1
         entries.append({
             "satellite_id": satellite_id,
             "name": name,
             "line1": line1,
             "line2": line2,
             "source_group": group,
+            
         })
         i += 3
     return entries
@@ -64,6 +65,7 @@ def ingest():
                     "name": stmt.excluded.name,
                     "line1": stmt.excluded.line1,
                     "line2": stmt.excluded.line2,
+                    "ingested_at": stmt.excluded.ingested_at,
                 }
             )
             db.execute(stmt)
