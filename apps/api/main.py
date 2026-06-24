@@ -1,9 +1,28 @@
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
 from sqlalchemy import text
 from database import SessionLocal
+from models import Tle
+from contextlib import asynccontextmanager
+from apscheduler.schedulers.background import BackgroundScheduler
+from ingest import ingest
 
-app = FastAPI()
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """
+    Manages the application lifecycle,
+    starts the scheduler on startup and shuts it down on exit
+    """
+    scheduler = BackgroundScheduler()
+    scheduler.add_job(ingest, "interval", hours=6)
+    scheduler.start()  # starts the scheduler when the API starts
+    yield
+    scheduler.shutdown()  # properly shuts down the scheduler when the API is shut down
+
+
+# registers the lifespan handler for startup/shutdown events
+app = FastAPI(lifespan=lifespan)
 
 
 def get_db():
@@ -21,5 +40,24 @@ def get_db():
 
 @app.get("/health")
 def health(db: Session = Depends(get_db)):
+    """ Checks that the API is running and the database responds """
     db.execute(text("SELECT 1"))
     return {"status": "okay"}
+
+
+@app.get("/api/tle")
+def list_tle(group: str = None, db: Session = Depends(get_db)):
+    """ Returns all TLEs, optionally filtered by group """
+    query = db.query(Tle)
+    if group:
+        query = query.filter(Tle.source_group == group)
+    return query.all()
+
+
+@app.get("/api/tle/{satellite_id}")
+def get_tle(satellite_id: str, db: Session = Depends(get_db)):
+    """Returns a single TLE by satellite ID, or 404 if not found"""
+    tle = db.query(Tle).filter(Tle.satellite_id == satellite_id).first()
+    if tle is None:
+        raise HTTPException(status_code=404, detail="Satellite not found")
+    return tle
