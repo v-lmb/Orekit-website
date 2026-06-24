@@ -30,7 +30,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=os.getenv("CORS_ALLOWED_ORIGINS", "http://localhost:3000").split(","),
     allow_methods=["GET"],
-    allow_hearders=["*"],
+    allow_headers=["*"],
 )
 
 
