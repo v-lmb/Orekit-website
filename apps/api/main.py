@@ -7,6 +7,7 @@ from models import Tle
 from contextlib import asynccontextmanager
 from apscheduler.schedulers.background import BackgroundScheduler
 from ingest import ingest
+from fastapi.middleware.cors import CORSMiddleware
 
 
 @asynccontextmanager
@@ -18,12 +19,19 @@ async def lifespan(app: FastAPI):
     scheduler = BackgroundScheduler()
     scheduler.add_job(ingest, "interval", hours=int(os.getenv("TLE_FETCH_INTERVAL_HOURS", "6")))
     scheduler.start()  # starts the scheduler when the API starts
+    ingest()
     yield
     scheduler.shutdown()  # properly shuts down the scheduler when the API is shut down
 
 
 # registers the lifespan handler for startup/shutdown events
 app = FastAPI(lifespan=lifespan)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=os.getenv("CORS_ALLOWED_ORIGINS", "http://localhost:3000").split(","),
+    allow_methods=["GET"],
+    allow_hearders=["*"],
+)
 
 
 def get_db():
@@ -47,12 +55,12 @@ def health(db: Session = Depends(get_db)):
 
 
 @app.get("/api/tle")
-def list_tle(group: str = None, db: Session = Depends(get_db)):
+def list_tle(group: str = None, limit: int = 100, offset: int = 0 ,db: Session = Depends(get_db)):
     """ Returns all TLEs, optionally filtered by group """
     query = db.query(Tle)
     if group:
         query = query.filter(Tle.source_group == group)
-    return query.all()
+    return query.offset(offset).limit(limit).all()
 
 
 @app.get("/api/tle/{satellite_id}")
