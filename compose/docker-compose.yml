@@ -16,9 +16,7 @@ services:
     ports:
       - "8000:8000"
     environment:
-      DATABASE_URL: postgresql://orekit:changeme@db:5433/orekit
-      context: ../apps/api
-
+      DATABASE_URL: postgresql://orekit:changeme@db:5432/orekit
     depends_on:
       - db
 
