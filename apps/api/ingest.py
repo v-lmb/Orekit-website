@@ -11,13 +11,17 @@ CELESTRAK_URL = "https://celestrak.org/NORAD/elements/gp.php?GROUP={group}&FORMA
 # groups to ingest, configurable via TLE_GROUPS env var
 GROUPS = os.getenv("TLE_GROUPS", "stations,active").split(",")
 
+RETRY_ATTEMPS = int(os.getenv("TLE_MAX_RETRIES", "3"))
+RETRY_MAX_WAIT = int(os.getenv("TLE_RETRY_MAX_WAIT", "10"))
+FETCH_TIME_OUT = int(os.getenv("TLE_FETCH_TIMEOUT_SECONDS", "10"))
+
 
 # retries up to 3 times with exponential backoff (2s, 4s, 8s) on failure
-@retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=2, max=10))
+@retry(stop=stop_after_attempt(RETRY_ATTEMPS), wait=wait_exponential(multiplier=1, min=2, max=RETRY_MAX_WAIT))
 def fetch_tle(group: str) -> str:
     """Fetches raw TLE text from Celestrak for a given group"""
     headers = {"User-Agent": "orekit-website/1.0"}
-    response = httpx.get(CELESTRAK_URL.format(group=group), timeout=10, headers=headers)
+    response = httpx.get(CELESTRAK_URL.format(group=group), timeout=FETCH_TIME_OUT, headers=headers)
     response.raise_for_status()
     return response.text
 

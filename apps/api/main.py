@@ -1,3 +1,4 @@
+import os
 from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
 from sqlalchemy import text
@@ -15,7 +16,7 @@ async def lifespan(app: FastAPI):
     starts the scheduler on startup and shuts it down on exit
     """
     scheduler = BackgroundScheduler()
-    scheduler.add_job(ingest, "interval", hours=6)
+    scheduler.add_job(ingest, "interval", hours=int(os.getenv("TLE_FETCH_INTERVAL_HOURS", "6")))
     scheduler.start()  # starts the scheduler when the API starts
     yield
     scheduler.shutdown()  # properly shuts down the scheduler when the API is shut down

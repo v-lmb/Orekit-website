@@ -27,6 +27,8 @@ jobs:
         with:
           python-version: "3.11"
 
+      - run: docker pull postgres:15
+
       - run: pip install -r apps/api/requirements.txt
 
       - run: python -m pytest tests/ -v
