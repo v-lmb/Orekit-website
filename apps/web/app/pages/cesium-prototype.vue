@@ -127,6 +127,10 @@ onMounted(async () => {
 
     // --- Atmosphere & lighting ---
     viewer.scene.globe.enableLighting = true
+    viewer.scene.globe.lightingFadeOutDistance = 2.5e7
+    viewer.scene.globe.lightingFadeInDistance = 6.5e6
+    viewer.scene.sun.show = true
+    viewer.scene.moon.show = true
     viewer.scene.globe.showGroundAtmosphere = true
     viewer.scene.globe.baseColor = Cesium.Color.fromCssColorString('#0a1628')
     viewer.scene.globe.atmosphereLightIntensity = 10.0
@@ -178,10 +182,10 @@ onMounted(async () => {
       orbitEntity = viewer.entities.add({
         polyline: {
           positions: computeOrbitRing(altitudeMeters, inclination, carto.longitude, carto.latitude),
-          width: 2,
+          width: 4,
           material: new Cesium.PolylineGlowMaterialProperty({
-            glowPower: 0.2,
-            color: Cesium.Color.fromCssColorString('#6BD8FF').withAlpha(0.7),
+            glowPower: 0.3,
+            color: Cesium.Color.fromCssColorString('#6BD8FF').withAlpha(0.85),
           }),
           clampToGround: false,
         },
@@ -334,7 +338,7 @@ onMounted(async () => {
     }
 
     try {
-      const res = await fetch('/api/tle?group=stations')
+      const res = await fetch('/api/tle?group=stations&limit=500')
       if (!res.ok) throw new Error(`API returned ${res.status}`)
       const tles = await res.json()
 
@@ -442,9 +446,6 @@ onUnmounted(() => {
 })
 </script>
 
-<style>
-html, body { margin: 0; padding: 0; overflow: hidden; }
-</style>
 
 <style scoped>
 .cesium-container { position: absolute; inset: 0; }
