@@ -1,9 +1,7 @@
 from ingest import parse_tle
 
-"""
-SAMPLE_TLE :
-ISS TLE used for testing
-"""
+# ISS TLE sample used for testing
+
 SAMPLE_TLE = """ISS (ZARYA)
 1 25544U 98067A   21275.51782528  .00001977  00000-0  45623-4 0  9993
 2 25544  51.6461 177.7014 0002829 317.6439 150.3229 15.48815838305102"""
