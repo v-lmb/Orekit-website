@@ -33,25 +33,9 @@
       </div>
     </section>
 
-    <!-- Globe placeholder -->
+    <!-- Live satellite globe -->
     <section class="globe-section">
-      <div class="globe-placeholder">
-        <svg viewBox="0 0 400 400" class="globe-svg" aria-label="Satellite viewer placeholder">
-          <circle cx="200" cy="200" r="160" fill="rgba(0,20,50,0.6)" stroke="#1a3a5c" stroke-width="1.5"/>
-          <ellipse cx="200" cy="200" rx="160" ry="60" fill="none" stroke="#1a3a5c" stroke-width="1"/>
-          <ellipse cx="200" cy="200" rx="160" ry="110" fill="none" stroke="#1a3a5c" stroke-width="0.8" transform="rotate(40 200 200)"/>
-          <ellipse cx="200" cy="200" rx="160" ry="110" fill="none" stroke="#1a3a5c" stroke-width="0.8" transform="rotate(-40 200 200)"/>
-          <line x1="200" y1="40" x2="200" y2="360" stroke="#1a3a5c" stroke-width="0.8"/>
-          <line x1="40" y1="200" x2="360" y2="200" stroke="#1a3a5c" stroke-width="0.8"/>
-          <circle cx="260" cy="140" r="5" fill="#4db8ff" opacity="0.9"/>
-          <circle cx="310" cy="220" r="4" fill="#4db8ff" opacity="0.7"/>
-          <circle cx="120" cy="170" r="4" fill="#00d084" opacity="0.8"/>
-          <circle cx="180" cy="280" r="3.5" fill="#4db8ff" opacity="0.6"/>
-          <circle cx="240" cy="320" r="3" fill="#00d084" opacity="0.7"/>
-          <circle cx="340" cy="160" r="3.5" fill="#4db8ff" opacity="0.5"/>
-        </svg>
-        <p class="globe-label">Satellite Viewer — CesiumJS integration coming in Sprint 2</p>
-      </div>
+      <GlobeEmbed />
     </section>
 
     <!-- In production at -->
@@ -174,7 +158,7 @@ const govLinks = [
 <style scoped>
 .container {
   max-width: 1200px;
-  margin: 0;
+  margin: 0 auto;
   padding: 0 24px;
 }
 
@@ -278,26 +262,9 @@ const govLinks = [
 
 /* Globe */
 .globe-section {
-  background: #06080f;
+  position: relative;
+  height: 500px;
   border-bottom: 1px solid var(--border);
-  min-height: 440px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  gap: 16px;
-}
-.globe-placeholder {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
-}
-.globe-svg { width: 320px; height: 320px; }
-.globe-label {
-  font-size: 12px;
-  color: var(--text-muted);
-  letter-spacing: 0.04em;
 }
 
 /* Users */
