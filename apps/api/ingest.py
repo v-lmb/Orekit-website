@@ -4,6 +4,9 @@ from tenacity import retry, stop_after_attempt, wait_exponential
 from sqlalchemy.dialects.postgresql import insert
 from database import SessionLocal
 from models import Tle
+import logging
+
+logger = logging.getLogger(__name__)
 
 # Celestrak endpoint, {group} is replaced at fetch time
 CELESTRAK_URL = "https://celestrak.org/NORAD/elements/gp.php?GROUP={group}&FORMAT=tle"
@@ -35,7 +38,7 @@ def parse_tle(text: str, group: str) -> list[dict]:
         name = lines[i].strip()
         line1 = lines[i + 1].strip()
         line2 = lines[i + 2].strip()
-        satellite_id = line1[2:7].strip()  # NORAD ID is ta fixed posistions 2-7 in line 1
+        satellite_id = line1[2:7].strip()  # NORAD ID is at fixed posistions 2-7 in line 1
         entries.append({
             "satellite_id": satellite_id,
             "name": name,
@@ -64,10 +67,15 @@ def ingest():
                     "name": stmt.excluded.name,
                     "line1": stmt.excluded.line1,
                     "line2": stmt.excluded.line2,
+                    "ingested_at": stmt.excluded.ingested_at,
                 }
             )
             db.execute(stmt)
+            logger.info("Ingested group '%s' : %d entries", group, len(entries))
         db.commit()
+    except Exception as e:
+        logger.error("Ingestion failed: %s", e)
+        raise
     finally:
         db.close()
 
