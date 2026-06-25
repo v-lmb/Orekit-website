@@ -50,7 +50,7 @@ uvicorn main:app --reload
 ```
 
 To verify the API is running, open http://localhost:8001/health in your
-browser or run:
+browser or run
 ```bash
 curl http://localhost:8001/health
 ```
@@ -77,21 +77,87 @@ python ingest.py
 ```
 
 ## 6.Deployment (maintainer-side)
-<!-- à compléter -->
+> This section is addressed to the maintainer.\
+> Reverse proxy, TLS, DNS, backups, and hosting are out of student scope.
+
+### 6.1 Artefacts delivered by the student team
+
+| Artefact | Location |
+|---|---|
+| Backend Docker image | published by CI to ghcr.io on every merge to `main` |
+| Alembic migrations | `apps/api/alembic/versions/` |
+| Environment template | `.env.example` at project root |
+| OpenAPI schema | `docs/openapi.json` |
+
+### 6.2 First deployment
+
+1. Pull the image
+```bash
+docker pull ghcr.io/<org>/orekit-website-api:<tag>
+```
+
+2. Copy and fill the environment file (see §2)
+```bash
+cp .env.example .env
+```
+
+3. Start the services
+```bash
+docker compose -f compose/docker-compose.yml up -d
+```
+
+4. Apply migrations
+```bash
+docker compose -f compose/docker-compose.yml exec api alembic upgrade head
+```
+
+5. Trigger initial TLE ingestion
+```bash
+docker compose -f compose/docker-compose.yml exec api python ingest.py
+```
+
+6. Verify
+```bash
+curl http://<host>:<port>/health
+```
+
+### 6.3 Subsequent updates
+
+1. Pull the new image and restart
+```bash
+docker compose -f compose/docker-compose.yml pull
+docker compose -f compose/docker-compose.yml up -d --build
+```
+
+2. Apply new migrations if any
+```bash
+docker compose -f compose/docker-compose.yml exec api alembic upgrade head
+```
+
+### 6.4 Reverse proxy
+
+The API must sit behind a reverse proxy (e.g. Caddy, nginx) handling TLS termination and HSTS.\
+Set `CORS_ALLOWED_ORIGINS` to the production frontend domain.
+
+### 6.5 Backups
+
+The tle table is repopulated automatically from Celestrak every `TLE_FETCH_INTERVAL_HOURS` hours, low risk to lose.\
+Still include the PostgreSQL volume in
+your backup policy.
 
 ## 7.Logs
 Run all commands from the project root unless stated otherwise.\
-View API logs in real time:
+View API logs in real time
 ```bash
 docker compose logs -f api
 ```
 
-Displays the logs for the PostgreSQL container:
+Displays the logs for the PostgreSQL container
 ```bash
 docker compose logs -f db
 ```
 
-Options:
+Options
 - `-f` : monitors logs in real time
 - `--tail=100` : displays the last 100 lines
 
