@@ -39,7 +39,43 @@
 
         <li><NuxtLink to="/download">Download</NuxtLink></li>
         <li><NuxtLink to="/news">News</NuxtLink></li>
-        <li><NuxtLink to="/community">Community</NuxtLink></li>
+
+        <li class="has-dropdown" @mouseenter="communityOpen = true" @mouseleave="communityOpen = false">
+          <NuxtLink to="/community" class="dropdown-trigger">
+            Community <span class="chevron">▾</span>
+          </NuxtLink>
+          <div class="dropdown" v-show="communityOpen">
+            <NuxtLink to="/governance" class="dropdown-item">
+              <span class="di-title">Governance</span>
+              <span class="di-desc">PMC, committers and project charter</span>
+            </NuxtLink>
+            <a href="https://forum.orekit.org/" target="_blank" rel="noopener" class="dropdown-item">
+              <span class="di-title">Forum</span>
+              <span class="di-desc">Ask questions and share solutions</span>
+            </a>
+            <NuxtLink to="/community" class="dropdown-item">
+              <span class="di-title">How to contribute?</span>
+              <span class="di-desc">Guide to contributing to Orekit</span>
+            </NuxtLink>
+            <a href="https://gitlab.orekit.org/orekit/orekit/-/issues" target="_blank" rel="noopener" class="dropdown-item">
+              <span class="di-title">Bug tracker</span>
+              <span class="di-desc">Report issues on GitLab</span>
+            </a>
+            <a href="https://gitlab.orekit.org/orekit/orekit" target="_blank" rel="noopener" class="dropdown-item">
+              <span class="di-title">Source code repository</span>
+              <span class="di-desc">Browse the code on GitLab</span>
+            </a>
+            <a href="https://gitlab.orekit.org/orekit/orekit/-/pipelines" target="_blank" rel="noopener" class="dropdown-item">
+              <span class="di-title">Continuous integration</span>
+              <span class="di-desc">Build and test pipeline status</span>
+            </a>
+            <a href="https://sonar.orekit.org/dashboard?id=orekit%3Aorekit" target="_blank" rel="noopener" class="dropdown-item">
+              <span class="di-title">Source code quality</span>
+              <span class="di-desc">SonarQube analysis dashboard</span>
+            </a>
+          </div>
+        </li>
+
         <li><NuxtLink to="/support">Support</NuxtLink></li>
       </ul>
 
@@ -50,6 +86,7 @@
 
 <script setup>
 const docOpen = ref(false)
+const communityOpen = ref(false)
 </script>
 
 <style scoped>
