@@ -5,7 +5,7 @@
       <section class="hero-section">
         <h1>Download</h1>
         <p class="lead">
-          The latest stable release is <strong>13.1.5</strong> (April 2025).
+          The latest stable release is <strong>{{ LATEST }}</strong> ({{ LATEST_DATE }}).
           Orekit is available via Maven Central, PyPI, or as a direct download.
         </p>
       </section>
@@ -27,8 +27,8 @@
 
       <section class="section">
         <h2>Python</h2>
-        <p class="body-text">The official Python wrapper uses JPype to expose the full Java API. Requires Java 11+.</p>
-        <pre class="code-block"><code>pip install orekit</code></pre>
+        <p class="body-text">The official Python wrapper uses JPype to expose the full Java API. Requires Java 11+. Install via conda-forge (recommended):</p>
+        <pre class="code-block"><code>conda install -c conda-forge orekit</code></pre>
         <p class="body-text" style="margin-top:12px">Then in Python:</p>
         <pre class="code-block"><code>import orekit
 orekit.initVM()
@@ -49,9 +49,9 @@ date = AbsoluteDate(2024, 1, 15, 12, 0, 0.0, TimeScalesFactory.getUTC())</code><
           </div>
           <div v-for="artifact in artifacts" :key="artifact.name" class="dt-row">
             <span class="art-name">{{ artifact.name }}</span>
-            <span class="art-version">{{ artifact.version }}</span>
+            <span class="art-version">{{ artifact.name.includes('data') ? 'latest' : LATEST }}</span>
             <span class="art-size">{{ artifact.size }}</span>
-            <a href="#" class="art-link">Download →</a>
+            <a :href="artifact.href" target="_blank" rel="noopener" class="art-link">Download →</a>
           </div>
         </div>
       </section>
@@ -62,7 +62,7 @@ date = AbsoluteDate(2024, 1, 15, 12, 0, 0.0, TimeScalesFactory.getUTC())</code><
         <div v-for="group in versions" :key="group.major" class="version-group">
           <h3>Version {{ group.major }}</h3>
           <div class="version-row">
-            <a v-for="v in group.list" :key="v" href="#" class="version-btn">{{ v }}</a>
+            <a v-for="v in group.list" :key="v" :href="`https://repo1.maven.org/maven2/org/orekit/orekit/${v}/`" target="_blank" rel="noopener" class="version-btn">{{ v }}</a>
           </div>
         </div>
       </section>
@@ -81,36 +81,16 @@ date = AbsoluteDate(2024, 1, 15, 12, 0, 0.0, TimeScalesFactory.getUTC())</code><
 </template>
 
 <script setup>
+import { LATEST, LATEST_DATE, versions, artifacts } from '~/data/versions'
+
 const snippetTabs = ['Maven', 'Gradle (Kotlin)', 'Gradle (Groovy)']
 const activeSnippet = ref('Maven')
 
 const snippets = {
-  'Maven': `<dependency>
-  <groupId>org.orekit</groupId>
-  <artifactId>orekit</artifactId>
-  <version>13.1.5</version>
-</dependency>`,
-  'Gradle (Kotlin)': `implementation("org.orekit:orekit:13.1.5")`,
-  'Gradle (Groovy)': `implementation 'org.orekit:orekit:13.1.5'`,
+  'Maven': `<dependency>\n  <groupId>org.orekit</groupId>\n  <artifactId>orekit</artifactId>\n  <version>${LATEST}</version>\n</dependency>`,
+  'Gradle (Kotlin)': `implementation("org.orekit:orekit:${LATEST}")`,
+  'Gradle (Groovy)': `implementation 'org.orekit:orekit:${LATEST}'`,
 }
-
-const artifacts = [
-  { name: 'orekit-13.1.5.jar',         version: '13.1.5', size: '3.2 MB' },
-  { name: 'orekit-13.1.5-sources.jar', version: '13.1.5', size: '2.1 MB' },
-  { name: 'orekit-13.1.5-javadoc.jar', version: '13.1.5', size: '8.4 MB' },
-  { name: 'orekit-data.zip',           version: 'latest', size: '64 MB'  },
-]
-
-const versions = [
-  { major: 13, list: ['13.1.5', '13.1.4', '13.1.3', '13.1.2', '13.1.1', '13.1', '13.0.3', '13.0.2', '13.0.1', '13.0'] },
-  { major: 12, list: ['12.2.1', '12.2', '12.1.3', '12.1.2', '12.1.1', '12.1', '12.0.2', '12.0.1', '12.0'] },
-  { major: 11, list: ['11.3.3', '11.3.2', '11.3.1', '11.3', '11.2.1', '11.2', '11.1.1', '11.1', '11.0.2', '11.0.1', '11.0'] },
-  { major: 10, list: ['10.3.1', '10.3', '10.2', '10.1', '10.0'] },
-  { major: 9,  list: ['9.3.1', '9.3', '9.2', '9.1', '9.0.1', '9.0'] },
-  { major: 8,  list: ['8.0.1', '8.0'] },
-  { major: 7,  list: ['7.2.1', '7.2', '7.1', '7.0'] },
-  { major: 6,  list: ['6.1'] },
-]
 </script>
 
 <style scoped>
