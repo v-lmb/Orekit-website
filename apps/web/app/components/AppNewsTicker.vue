@@ -2,11 +2,15 @@
   <div class="ticker">
     <span class="label">LATEST NEWS</span>
     <span class="text">
-      Orekit 13.1.5 is out &nbsp;·&nbsp; Apr 24, 2025 &nbsp;·&nbsp; 23 fixes, 4 new force models, DSST improvements
+      Orekit {{ LATEST }} is out &nbsp;·&nbsp; June 3, 2026 &nbsp;·&nbsp; Patch release
     </span>
     <NuxtLink to="/news" class="read-more">READ NOTE →</NuxtLink>
   </div>
 </template>
+
+<script setup>
+import { LATEST } from '~/data/versions'
+</script>
 
 <style scoped>
 .ticker {
