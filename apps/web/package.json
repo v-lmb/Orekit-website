@@ -17,6 +17,7 @@
     "vue-router": "^5.0.7"
   },
   "devDependencies": {
+    "@types/node": "^26.0.1",
     "vite-plugin-cesium": "^1.2.23"
   }
 }
