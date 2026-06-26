@@ -11,12 +11,21 @@ export default defineNuxtConfig({
     }
   },
   vite: {
-    plugins: [cesium()],
-    build: {
-      target: 'esnext'
-    },
-    optimizeDeps: {
-      exclude: ['satellite.js']
-    }
+    plugins: [
+      cesium(),
+      {
+        name: 'satellite-wasm-stub',
+        resolveId(id) {
+          if (id === '#wasm-single-thread' || id === '#wasm-multi-thread') {
+            return '\0satellite-wasm-stub'
+          }
+        },
+        load(id) {
+          if (id === '\0satellite-wasm-stub') {
+            return 'export default async function() { return null }'
+          }
+        }
+      }
+    ]
   }
 })
