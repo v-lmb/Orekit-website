@@ -10,14 +10,14 @@
         <div class="version-group">
           <h3>Under Development :</h3>
           <div class="version-row">
-            <a href="#" class="version-btn highlight">UD</a>
+            <a href="https://www.orekit.org/site-orekit-latest/apidocs/" target="_blank" rel="noopener" class="version-btn highlight">UD</a>
           </div>
         </div>
 
         <div v-for="group in versions" :key="group.major" class="version-group">
           <h3>Version {{ group.major }} :</h3>
           <div class="version-row">
-            <a v-for="v in group.list" :key="v" href="#" class="version-btn">{{ v }}</a>
+            <a v-for="v in group.list" :key="v" :href="`https://www.orekit.org/site-orekit-${v}/apidocs/`" target="_blank" rel="noopener" class="version-btn">{{ v }}</a>
           </div>
         </div>
       </section>
@@ -26,16 +26,7 @@
 </template>
 
 <script setup>
-const versions = [
-  { major: 13, list: ['13.1.5', '13.1.4', '13.1.3', '13.1.2', '13.1.1', '13.1', '13.0.3', '13.0.2', '13.0.1', '13.0'] },
-  { major: 12, list: ['12.2.1', '12.2', '12.1.3', '12.1.2', '12.1.1', '12.1', '12.0.2', '12.0.1', '12.0'] },
-  { major: 11, list: ['11.3.3', '11.3.2', '11.3.1', '11.3', '11.2.1', '11.2', '11.1.1', '11.1', '11.0.2', '11.0.1', '11.0'] },
-  { major: 10, list: ['10.3.1', '10.3', '10.2', '10.1', '10.0'] },
-  { major: 9,  list: ['9.3.1', '9.3', '9.2', '9.1', '9.0.1', '9.0'] },
-  { major: 8,  list: ['8.0.1', '8.0'] },
-  { major: 7,  list: ['7.2.1', '7.2', '7.1', '7.0'] },
-  { major: 6,  list: ['6.1'] },
-]
+import { versions } from '~/data/versions'
 </script>
 
 <style scoped>
