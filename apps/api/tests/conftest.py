@@ -1,3 +1,6 @@
+# Fixtures for integration tests
+# each session spins up a real PostgreSQL 15 via testcontainers
+
 import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine

@@ -53,7 +53,9 @@ def parse_tle(text: str, group: str) -> list[dict]:
 def ingest():
     """
     Opens a database session, fetches and parses TLE data for each group,
-    and upserts satellites / inserting new ones or updating existing ones
+    and upserts into the database :
+    inserts new sattellites or updates existing ones
+    ingested_at is overwritten on every run to track the last update time
     """
     db = SessionLocal()
     try:

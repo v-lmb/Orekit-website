@@ -19,7 +19,7 @@ class Tle(Base):
     source_group: Mapped[str] = mapped_column(String(50))
     ingested_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
-        default=lambda: datetime.now(timezone.utc)
+        default=lambda: datetime.now(timezone.utc)  # updated on every upsert, not the date of the first insertion
     )
 
     # a satellite can appear in multiple groups, uniqueness is defined for each pair (satellite, group)
