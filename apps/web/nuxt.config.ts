@@ -7,10 +7,17 @@ export default defineNuxtConfig({
   nitro: {
     preset: 'static',
     routeRules: {
-      '/api/**': { proxy: 'http://localhost:8000/api/**' }
+      '/api/**': { proxy: `${process.env.API_BASE_URL ?? 'http://localhost:8000'}/api/**` }
     }
   },
   vite: {
-    plugins: [cesium()]
+    plugins: [cesium()],
+    build: {
+      rollupOptions: {
+        external: [
+          /satellite\.js\/wasm-build\/.*/,
+        ]
+      }
+    }
   }
 })
