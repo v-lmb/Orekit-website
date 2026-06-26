@@ -181,7 +181,7 @@ h2 { font-size: 22px; font-weight: 400; color: #fff; margin-bottom: 24px; }
 
 .info-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 1px;
   background: var(--border);
   border: 1px solid var(--border);
