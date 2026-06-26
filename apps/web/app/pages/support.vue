@@ -5,8 +5,8 @@
       <section class="hero-section">
         <h1>Support</h1>
         <p class="lead">
-          Orekit is open-source software maintained by volunteers. Support is community-driven —
-          there is no commercial support contract. The forum is your best first stop.
+          Orekit is open-source software maintained by volunteers. Community support is free —
+          the forum is your best first stop. Commercial support is also available through CS Group.
         </p>
       </section>
 
@@ -49,14 +49,27 @@
         <a href="https://gitlab.orekit.org/orekit/orekit/-/issues/new" target="_blank" rel="noopener" class="btn-primary">Open a GitLab issue →</a>
       </section>
 
-      <section class="section last">
+      <section class="section">
         <h2>Documentation</h2>
         <div class="doc-links">
-          <NuxtLink v-for="doc in docs" :key="doc.title" :to="doc.to" class="doc-link">
+          <a v-for="doc in docs" :key="doc.title" :href="doc.href" :target="doc.external ? '_blank' : null" :rel="doc.external ? 'noopener' : null" class="doc-link">
             <span class="doc-title">{{ doc.title }}</span>
             <span class="doc-desc">{{ doc.desc }}</span>
-          </NuxtLink>
+          </a>
         </div>
+      </section>
+
+      <section class="section last">
+        <h2>Commercial support</h2>
+        <p class="body-text">
+          Commercial support and training for users of Orekit are provided by <strong>CS Group</strong>.
+          Their space dynamics experts are also available for studies and custom development.
+          Please <a href="https://www.csgroup.eu" target="_blank" rel="noopener" class="inline-link">contact CS Group</a> for more information.
+        </p>
+        <p class="body-text">
+          CS Group commercial products based on Orekit are presented on the commercial web site
+          <a href="https://gosmic.eu/oreflids.php" target="_blank" rel="noopener" class="inline-link">gosmic.eu/oreflids.php</a>.
+        </p>
       </section>
 
     </div>
@@ -104,10 +117,10 @@ const channels = [
     title: 'Mailing list',
     badge: 'Announcements',
     badgeClass: 'muted',
-    desc: 'Low-traffic list for release announcements. Not monitored for support requests.',
+    desc: 'Low-traffic list for release announcements. Not monitored for support requests. Legacy developer and user archives are available but no longer active.',
     note: 'Subscribe to stay informed of new releases.',
-    href: '#',
-    external: false,
+    href: 'https://forum.orekit.org/c/orekit-announcements',
+    external: true,
   },
 ]
 
@@ -120,10 +133,10 @@ const bugItems = [
 ]
 
 const docs = [
-  { title: 'API Documentation (Javadoc)', desc: 'Class and method reference for every release.', to: '/doc-javadoc' },
-  { title: 'User manual',                desc: 'Conceptual guide covering all major modules.', to: '#' },
-  { title: 'Tutorials',                  desc: 'Step-by-step examples for common use cases.', to: '#' },
-  { title: 'Python wrapper guide',       desc: 'Getting started with Orekit in Python.', to: '#' },
+  { title: 'API Documentation (Javadoc)', desc: 'Class and method reference for every release.',  href: '/doc-javadoc',    external: false },
+  { title: 'User manual',                desc: 'Conceptual guide covering all major modules.',    href: '/documentation',  external: false },
+  { title: 'Tutorials',                  desc: 'Step-by-step examples for common use cases.',    href: '/documentation',  external: false },
+  { title: 'Python wrapper guide',       desc: 'Getting started with Orekit in Python.',         href: 'https://gitlab.orekit.org/orekit-labs/python-wrapper/-/wikis/home', external: true },
 ]
 </script>
 
@@ -217,4 +230,7 @@ h2 { font-size: 22px; font-weight: 400; color: #fff; margin-bottom: 24px; }
 .doc-link:hover { background: var(--bg-card-hover); text-decoration: none; }
 .doc-title { font-size: 14px; color: var(--text-primary); }
 .doc-desc  { font-size: 12px; color: var(--text-muted); }
+
+.inline-link { color: var(--accent); text-decoration: none; }
+.inline-link:hover { text-decoration: underline; }
 </style>
