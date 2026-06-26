@@ -20,7 +20,7 @@
             <hr class="card-divider" />
             <div class="get-row">
               <NuxtLink to="/download" class="btn-get">Get Orekit</NuxtLink>
-              <span class="get-meta">Maven · 13.1.5</span>
+              <span class="get-meta">Maven · {{ LATEST }}</span>
             </div>
             <div class="stats-grid">
               <div class="stat"><span class="stat-val">21+</span><span class="stat-lbl">years</span></div>
@@ -42,7 +42,7 @@
     <section class="users-section">
       <p class="section-label">IN PRODUCTION AT</p>
       <div class="users-list">
-        <span v-for="org in orgs" :key="org" class="org">{{ org }}</span>
+        <a v-for="org in orgs" :key="org.name" :href="org.href" target="_blank" rel="noopener" class="org">{{ org.name }}</a>
       </div>
     </section>
 
@@ -94,6 +94,23 @@ KeplerianPropagator propagator =
       </div>
     </section>
 
+    <!-- PMC Members -->
+    <section class="pmc-section">
+      <div class="container">
+        <p class="section-label">PROJECT MANAGEMENT COMMITTEE</p>
+        <div class="pmc-grid">
+          <a v-for="member in pmc" :key="member.name" :href="member.linkedin || null" :target="member.linkedin ? '_blank' : null" :rel="member.linkedin ? 'noopener' : null" class="pmc-card" :class="{ clickable: member.linkedin }">
+            <span class="pmc-name">{{ member.name }}</span>
+            <span class="pmc-org">{{ member.org }}</span>
+            <span class="pmc-country">{{ member.country }}</span>
+          </a>
+        </div>
+        <div class="pmc-footer">
+          <NuxtLink to="/governance" class="pmc-link">View full governance model →</NuxtLink>
+        </div>
+      </div>
+    </section>
+
     <!-- Bottom two columns -->
     <section class="bottom-section">
       <div class="container bottom-grid">
@@ -124,7 +141,20 @@ KeplerianPropagator propagator =
 </template>
 
 <script setup>
-const orgs = ['ESA', 'CNES', 'Airbus', 'Thales', 'NRL', 'SSC', 'EUMETSAT', 'Eutelsat', 'CS GROUP', 'ISAE', 'Safran', 'nTrack']
+import { LATEST } from '~/data/versions'
+import { pmc } from '~/data/governance'
+
+const orgs = [
+  { name: 'CS Group',              href: 'https://www.csgroup.eu' },
+  { name: 'Airbus Defence & Space',href: 'https://www.airbus.com/en/space' },
+  { name: 'NRL',                   href: 'https://www.nrl.navy.mil' },
+  { name: 'SSC',                   href: 'https://www.sscspace.com' },
+  { name: 'Thales Alenia Space',   href: 'https://www.thalesaleniaspace.com' },
+  { name: 'CNES',                  href: 'https://www.cnes.fr' },
+  { name: 'ESA',                   href: 'https://www.esa.int' },
+  { name: 'EUMETSAT',              href: 'https://www.eumetsat.int' },
+  { name: 'Exotrail',              href: 'https://www.exotrail.com' },
+]
 
 const features = [
   { title: 'Orbits & frames',      desc: 'Inertial and rotating frames, coordinate transforms, GCRF, TEME, ITRF, topocentric.' },
@@ -280,19 +310,21 @@ const govLinks = [
   margin-bottom: 24px;
 }
 .users-list {
-  max-width: 900px;
-  margin: 0 auto;
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   justify-content: center;
-  gap: 12px 36px;
+  gap: 36px;
 }
 .org {
   font-size: 14px;
   font-weight: 500;
   color: var(--text-secondary);
   letter-spacing: 0.04em;
+  text-decoration: none;
+  transition: color 0.15s;
+  white-space: nowrap;
 }
+.org:hover { color: var(--accent); text-decoration: none; }
 
 /* Code */
 .code-section {
@@ -381,6 +413,39 @@ const govLinks = [
 .feature-card:hover { background: var(--bg-card-hover); }
 .feature-card h3 { font-size: 14px; font-weight: 500; color: var(--text-primary); margin-bottom: 8px; }
 .feature-card p { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+
+/* PMC */
+.pmc-section {
+  padding: 64px 24px;
+  border-top: 1px solid var(--border);
+}
+.pmc-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 24px;
+}
+.pmc-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-decoration: none;
+  transition: background 0.15s;
+  flex: 0 0 calc(25% - 6px);
+  min-width: 0;
+}
+.pmc-card:hover { background: var(--bg-card-hover); text-decoration: none; }
+.pmc-card.clickable:hover .pmc-name { color: var(--accent); }
+.pmc-name    { font-size: 13px; font-weight: 500; color: var(--text-primary); }
+.pmc-org     { font-size: 11px; color: var(--text-muted); }
+.pmc-country { font-size: 11px; color: var(--text-muted); }
+.pmc-footer  { margin-top: 20px; text-align: right; }
+.pmc-link    { font-size: 13px; color: var(--accent); text-decoration: none; }
+.pmc-link:hover { text-decoration: underline; }
 
 /* Bottom */
 .bottom-section { padding: 64px 24px; }
