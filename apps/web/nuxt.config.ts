@@ -11,6 +11,12 @@ export default defineNuxtConfig({
     }
   },
   vite: {
-    plugins: [cesium()]
+    plugins: [cesium()],
+    build: {
+      target: 'esnext'
+    },
+    optimizeDeps: {
+      exclude: ['satellite.js']
+    }
   }
 })
