@@ -11,6 +11,9 @@ from ingest import ingest
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.requests import Request
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.util import get_remote_address
+from slowapi.errors import RateLimitExceeded
 
 
 
@@ -30,6 +33,8 @@ async def lifespan(app: FastAPI):
     yield
     scheduler.shutdown()  # properly shuts down the scheduler when the API is shut down
 
+limiter = Limiter(key_func=get_remote_address)
+
 
 # security headers
 class SecurityHeaderMiddleware(BaseHTTPMiddleware):
@@ -44,6 +49,8 @@ class SecurityHeaderMiddleware(BaseHTTPMiddleware):
 
 # registers the lifespan handler for startup/shutdown events
 app = FastAPI(lifespan=lifespan)
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=os.getenv("CORS_ALLOWED_ORIGINS", "http://localhost:3000").split(","),
@@ -74,7 +81,8 @@ def health(db: Session = Depends(get_db)):
 
 
 @app.get("/api/tle")
-def list_tle(group: str = None, limit: int = 100, offset: int = 0 ,db: Session = Depends(get_db)):
+@limiter.limit("60/minute")
+def list_tle(request: Request, group: str = None, limit: int = 100, offset: int = 0, db: Session = Depends(get_db)):
     """ Returns all TLEs, optionally filtered by group """
     query = db.query(Tle)
     if group:
@@ -83,7 +91,8 @@ def list_tle(group: str = None, limit: int = 100, offset: int = 0 ,db: Session =
 
 
 @app.get("/api/tle/{satellite_id}")
-def get_tle(satellite_id: str, db: Session = Depends(get_db)):
+@limiter.limit("60/minute")
+def get_tle(request: Request, satellite_id: str, db: Session = Depends(get_db)):
     """Returns a single TLE by satellite ID, or 404 if not found"""
     tle = db.query(Tle).filter(Tle.satellite_id == satellite_id).first()
     if tle is None:
