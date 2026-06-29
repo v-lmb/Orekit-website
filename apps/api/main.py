@@ -16,22 +16,21 @@ from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
 
 
-
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """
-    Manages the application lifecycle,
-    starts the scheduler on startup and shuts it down on exit
+    Manages the application lifecycle: starts the background scheduler,
+    attempts an initial TLE ingestion and shuts the scheduler down on exit
     """
     scheduler = BackgroundScheduler()
     scheduler.add_job(ingest, "interval", hours=int(os.getenv("TLE_FETCH_INTERVAL_HOURS", "6")))
-    scheduler.start()  # starts the scheduler when the API starts
+    scheduler.start()
     try:
         ingest()
     except Exception as e:
         logging.warning("Startup ingestion failed, will retry on next schedule: %s", e)
     yield
-    scheduler.shutdown()  # properly shuts down the scheduler when the API is shut down
+    scheduler.shutdown()
 
 limiter = Limiter(key_func=get_remote_address)
 
