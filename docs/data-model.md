@@ -12,7 +12,7 @@
 | line1 | VARCHAR(69) | First TLE line |
 | line2 | VARCHAR(69) | Second TLE line |
 | source_group | VARCHAR(50) | Celestrak group the satellite was ingested from (e.g. stations, active) |
-| ingested_at | TIMESTAMPTZ | Timestamp of last ingestion (UTC) |
+| ingested_at | TIMESTAMPTZ | Timestamp of the most recent upsert from Celestrak (UTC). Updated on every ingestion run not the date of first insertion. |
 
 ### Constraints
 
