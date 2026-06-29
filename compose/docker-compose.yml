@@ -20,5 +20,15 @@ services:
     depends_on:
       - db
 
+  web:
+    build:
+      context: ../apps/web
+    ports:
+      - "3000:3000"
+    environment:
+      - HOST=0.0.0.0
+    depends_on:
+      - api
+
 volumes:
   postgres_data:
