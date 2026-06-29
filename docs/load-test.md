@@ -28,7 +28,7 @@ File: `apps/api/tests/locustfile.py`
 | get_tle_by_id | `GET /api/tle/25544` | 3 | Indexed lookup (ISS) |
 | get_tle_not_found | `GET /api/tle/99999999999` | 1 | Error handling under load |
 
-Wait time between requests: 1–3 seconds per simulated user.
+Wait time between requests: 1-3 seconds per simulated user.
 
 
 ## Interpreting results
@@ -53,3 +53,20 @@ Test run 3 : 2026-06-26 > 10 simulated users, spawn rate 2/s, 2 minutes.
 
 `GET /api/tle` drops to a median of 7 ms with pagination enabled (limit=100, ~29 KB response).\
 Runs 1 and 2 were performed using an outdated Docker image without pagination and do not constitute a valid baseline.
+
+## Rate limiting verification
+
+**Tool :** curl (manual test)\
+**Date :** 2026-06-29
+
+**Command:**
+```bash
+for i in $(seq 1 65); do curl -s -o /dev/null -w "%{http_code}\n" http://localhost:8001/api/tle; done
+```
+
+**Result :**\
+60 × `200 OK` then 5 × `429 Too Many Requests`
+
+**Conclusion :**\
+Rate limit of 60 requests/minute per IP enforced correctly with slowapi
+Clients exceeding the threshold receive `429 Too Many Requests`
