@@ -1,4 +1,5 @@
 import os
+import logging
 from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
 from sqlalchemy import text
@@ -8,6 +9,9 @@ from contextlib import asynccontextmanager
 from apscheduler.schedulers.background import BackgroundScheduler
 from ingest import ingest
 from fastapi.middleware.cors import CORSMiddleware
+from starlette.middleware.base import BaseHTTPMiddleware
+from starlette.requests import Request
+
 
 
 @asynccontextmanager
@@ -19,9 +23,23 @@ async def lifespan(app: FastAPI):
     scheduler = BackgroundScheduler()
     scheduler.add_job(ingest, "interval", hours=int(os.getenv("TLE_FETCH_INTERVAL_HOURS", "6")))
     scheduler.start()  # starts the scheduler when the API starts
-    ingest()
+    try:
+        ingest()
+    except Exception as e:
+        logging.warning("Startup ingestion failed, will retry on next schedule: %s", e)
     yield
     scheduler.shutdown()  # properly shuts down the scheduler when the API is shut down
+
+
+# security headers
+class SecurityHeaderMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request: Request, call_next):
+        response = await call_next(request)
+        response.headers["X-Content-Type-Options"] = "nosniff"
+        response.headers["X-Frame-Options"] = "DENY"
+        response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
+        response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+        return response
 
 
 # registers the lifespan handler for startup/shutdown events
@@ -32,6 +50,7 @@ app.add_middleware(
     allow_methods=["GET"],
     allow_headers=["*"],
 )
+app.add_middleware(SecurityHeaderMiddleware)
 
 
 def get_db():
