@@ -81,6 +81,7 @@
       </ul>
 
       <a href="https://gitlab.orekit.org/orekit/orekit" target="_blank" rel="noopener" class="btn-gitlab">GitLab</a>
+      <a href="https://github.com/CS-SI/Orekit" target="_blank" rel="noopener" class="btn-gitlab">GitHub</a>
     </div>
   </nav>
 </template>
@@ -99,8 +100,6 @@ const communityOpen = ref(false)
   z-index: 100;
 }
 .nav-inner {
-  max-width: 1200px;
-  margin: 0;
   padding: 0 24px 8px;
   height: 72px;
   display: flex;
