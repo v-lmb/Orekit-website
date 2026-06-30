@@ -2,20 +2,15 @@
   <div class="page">
     <div class="inner">
 
-      <section class="hero-section">
-        <h1>Tutorials</h1>
-        <p class="lead">
-          Step-by-step examples for Java and Python, from basic propagation to orbit determination.
-          All source code is available on the
-          <a href="https://gitlab.orekit.org/orekit/orekit-tutorials" target="_blank" rel="noopener" class="inline-link">Orekit Tutorials repository</a>.
-        </p>
-      </section>
+      <h1>Tutorials</h1>
 
       <section class="section">
-        <h2>Java tutorials — Maven site</h2>
+        <h2>Java tutorials, by the Orekit team</h2>
+
+        <h3>Maven site for the Java tutorials</h3>
         <p class="body-text">
-          The Maven site for each release includes technical documentation, dependency analysis, and test coverage.
-          Select a version to browse it:
+          The technical documentation explains how to build, download and contribute to the Orekit tutorials. Please choose the Orekit tutorials release for which you
+          want to consult the technical documentation:
         </p>
         <div class="version-row">
           <a v-for="v in mavenVersions" :key="v.label"
@@ -24,14 +19,9 @@
             {{ v.label }}
           </a>
         </div>
-      </section>
 
-      <section class="section">
-        <h2>Markdown tutorials</h2>
-        <p class="body-text">
-          Tutorials provided with source code and comments to emphasise particular use cases.
-          Links point to the 13.1 version — select an older Maven site above for earlier releases.
-        </p>
+        <h3 style="margin-top:40px">Markdown tutorials</h3>
+        <p class="body-text">Tutorials provided with source code and comments in order to emphazise particular use cases:</p>
         <div class="tutorial-list">
           <a v-for="t in markdownTutorials" :key="t.title"
              :href="t.href" target="_blank" rel="noopener"
@@ -40,13 +30,12 @@
             <span class="tut-desc">{{ t.desc }}</span>
           </a>
         </div>
-      </section>
 
-      <section class="section">
-        <h2>Pure Java tutorials</h2>
+        <h3 style="margin-top:40px">Pure Java tutorials</h3>
         <p class="body-text">
-          Source code available on the
-          <a href="https://gitlab.orekit.org/orekit/orekit-tutorials/-/tree/main/src/main/java/org/orekit/tutorials" target="_blank" rel="noopener" class="inline-link">Orekit Tutorials GitLab project</a>.
+          You will find the source code of these tutorials on the dedicated
+          <a href="https://gitlab.orekit.org/orekit/orekit-tutorials/-/tree/main/src/main/java/org/orekit/tutorials?ref_type=heads" target="_blank" rel="noopener" class="inline-link">Orekit Tutorials</a>
+          project on the forge:
         </p>
         <div class="category-list">
           <div v-for="cat in javaCategories" :key="cat.name" class="category">
@@ -59,14 +48,19 @@
       </section>
 
       <section class="section">
-        <h2>Python wrapper examples</h2>
+        <h2>Orekit Python Wrapper examples, by Petrus Hyvönen</h2>
         <p class="body-text">
-          Written by Petrus Hyvönen (<a href="https://www.sscspace.com/" target="_blank" rel="noopener" class="inline-link">Swedish Space Corporation</a>),
-          maintainer of the <a href="https://gitlab.orekit.org/orekit-labs/python-wrapper" target="_blank" rel="noopener" class="inline-link">Orekit Python Wrapper</a>.
-          Additional examples are in the
-          <a href="https://gitlab.orekit.org/orekit-labs/python-wrapper/tree/master/examples" target="_blank" rel="noopener" class="inline-link">examples directory</a>
-          of the wrapper repository.
+          Petrus Hyvönen, who works for the
+          <a href="https://www.sscspace.com/" target="_blank" rel="noopener" class="inline-link">Swedish Space Corporation</a>
+          (SSC), created an
+          <a href="https://gitlab.orekit.org/orekit-labs/python-wrapper" target="_blank" rel="noopener" class="inline-link">Orekit Python Wrapper</a>
+          which is acclaimed by a lot of users. He has been maintaining it for years,
+          always providing an update in the days following the release of a new version of
+          Orekit. Petrus also wrote some tutorials for his wrapper, available in the
+          <a href="https://gitlab.orekit.org/orekit-labs/python-wrapper/tree/master/examples" target="_blank" rel="noopener" class="inline-link">examples</a>
+          directory of the Orekit Python Wrapper repository.
         </p>
+        <p class="body-text">Thanks a lot for your amazing work Petrus!</p>
         <div class="tutorial-list">
           <a v-for="t in pythonTutorials" :key="t.title"
              :href="t.href" target="_blank" rel="noopener"
@@ -78,33 +72,41 @@
       </section>
 
       <section class="section last">
-        <h2>Free &amp; open-source examples</h2>
+        <h1>Free &amp; open source examples</h1>
 
+        <h2>Python Satellite Laser Ranging (SLR) orbit determination example, by Clément Jonglez</h2>
         <div class="oss-card">
           <div class="oss-title">
             <a href="https://nbviewer.jupyter.org/github/GorgiAstro/laser-orbit-determination/blob/6cafcef83dbc03a61d64417d0aeb0977caf0e064/02-orbit-determination-example.ipynb" target="_blank" rel="noopener" class="inline-link">
-              Python SLR orbit determination
+              Python SLR orbit determination example
             </a>
           </div>
           <p class="oss-desc">
-            A complete and detailed Jupyter-based tutorial by Clément Jonglez
-            (<a href="https://www.tu-berlin.de/menue/home/parameter/en/" target="_blank" rel="noopener" class="inline-link">Technische Universität Berlin</a>),
-            covering Satellite Laser Ranging orbit determination in Python.
+            Clément Jonglez, who works for the
+            <a href="https://www.tu-berlin.de/menue/home/parameter/en/" target="_blank" rel="noopener" class="inline-link">Technische Universität Berlin</a>,
+            wrote a complete and very detailed tutorial. The explanations are clear
+            and the tutorial is easily runnable since it's Jupyter based.
+            A remarkable work!
           </p>
         </div>
 
+        <h2 style="margin-top:32px">ASTRIAGraph, (The University of Texas at Austin)</h2>
         <div class="oss-card">
           <div class="oss-title">
             <a href="https://sites.utexas.edu/moriba/astriagraph/" target="_blank" rel="noopener" class="inline-link">
-              ASTRIAGraph — The University of Texas at Austin
+              ASTRIAGraph
             </a>
           </div>
           <p class="oss-desc">
-            An interactive visualization application built on orbdetpy, an orbit determination library based on Orekit.
-            Developed by the <a href="https://sites.utexas.edu/moriba/" target="_blank" rel="noopener" class="inline-link">ASTRIA</a> team.
-            Published on GitHub under GNU GPL v3.0:
-            <a href="https://github.com/ut-astria/AstriaGraph" target="_blank" rel="noopener" class="inline-link">AstriaGraph</a> and
-            <a href="https://github.com/ut-astria/orbdetpy" target="_blank" rel="noopener" class="inline-link">orbdetpy</a>.
+            ASTRIAGraph (see the <a href="http://astria.tacc.utexas.edu/AstriaGraph/" target="_blank" rel="noopener" class="inline-link">demonstration site</a>)
+            is an interactive visualization application which relies on orbdetpy, an
+            orbit determination library itself based on Orekit. ASTRIAGraph and
+            orbdetpy are both developed at the Advanced Sciences and Technology Research in Astronautics
+            (<a href="https://sites.utexas.edu/moriba/" target="_blank" rel="noopener" class="inline-link">ASTRIA</a>)
+            team of the University of Texas at Austin, and distributed under the GNU
+            GPL v3.0 license. They are published on Github
+            (<a href="https://github.com/ut-astria/AstriaGraph" target="_blank" rel="noopener" class="inline-link">AstriaGraph</a>
+            and <a href="https://github.com/ut-astria/orbdetpy" target="_blank" rel="noopener" class="inline-link">orbdetpy</a>).
           </p>
         </div>
       </section>
@@ -133,107 +135,128 @@ const markdownTutorials = [
   {
     title: 'Attitude',
     href: 'https://www.orekit.org/site-orekit-tutorials-13.1/tutorials/attitude.html',
-    desc: 'Specific usage of the attitude package — switching modes, guidance laws, and pointing.'
+    desc: 'This tutorial emphasizes a specific usage of the attitude package described in the attitudes section of the library architecture documentation.'
   },
   {
     title: 'Frames',
     href: 'https://www.orekit.org/site-orekit-tutorials-13.1/tutorials/frames.html',
-    desc: 'Doppler effect computation, center-of-gravity position in EME2000, and yaw-steering attitude effects.'
+    desc: 'This tutorial shows how to solve three problems: (1) computation of the Doppler effect of a satellite with respect to a ground station, (2) computation of the position and velocity of the center of gravity in the EME2000 inertial frame and (3) plot some of the effects on the motion of a spacecraft which attitude is guided by a yaw steering law.'
   },
   {
     title: 'Propagation',
     href: 'https://www.orekit.org/site-orekit-tutorials-13.1/tutorials/propagation.html',
-    desc: 'Elementary propagation package usage — modes, event detection, and step handlers.'
+    desc: 'This tutorial details some elementary usages of the propagation package described in the propagation section of the library architecture documentation (propagation modes, events management).'
   },
   {
     title: 'Maneuvers',
     href: 'https://www.orekit.org/site-orekit-tutorials-13.1/tutorials/maneuvers.html',
-    desc: 'Simple impulse maneuvers and continuous thrust maneuvers.'
+    desc: 'This tutorial shows some elementary usages of the maneuvers. Both simple impulse maneuvers and more complex continuous thrust maneuvers are presented.'
   },
   {
     title: 'Propagation in non-inertial frame',
     href: 'https://www.orekit.org/site-orekit-tutorials-13.1/tutorials/propagation-in-non-inertial-frame.html',
-    desc: 'Orbital integration with SingleBodyAttraction and InertialForces in non-Earth-centered frames.'
+    desc: 'This tutorial aims to introduce orbital integration using SingleBodyAttraction and InertialForces classes, which allowing the user to compute the motion of a satellite in a reference frame that is not necessarily centered on the main attractor and does not necessarily possess inertial axis.'
   },
   {
     title: 'Time',
     href: 'https://www.orekit.org/site-orekit-tutorials-13.1/tutorials/time.html',
-    desc: 'Handling dates, time scales, and time intervals in Orekit.'
+    desc: 'This tutorial shows how to handle time in Orekit.'
   },
   {
     title: 'Geomagnetic Field Model',
     href: 'https://www.orekit.org/site-orekit-tutorials-13.1/tutorials/geomagnetic-field.html',
-    desc: 'Computing the geomagnetic field of the Earth.'
+    desc: 'This tutorial shows how to calculate the geomagnetic field of the earth.'
   },
   {
     title: 'Integration in other languages',
     href: 'https://www.orekit.org/site-orekit-tutorials-13.1/tutorials/integration-in-other-languages.html',
-    desc: 'Accessing Orekit from Matlab, Python, or Jython for scripting and quick prototyping.'
+    desc: 'The Orekit library can be accessed from other languages, for integration into existing software or for quick prototyping in a scripting language such as Matlab, Python or Jython. This allows for direct interaction with the different objects, either from a script or directly at the command prompt, and quick access to plotting tools.'
   },
 ]
 
 const javaCategories = [
-  { name: 'Attitude', items: ['EarthObservation — switch between day and night attitude modes'] },
-  { name: 'Bodies', items: ['DEFile — read/write JPL or IMCCE inpop ephemeris binary files', 'Phasing — set up a Sun-synchronous Earth-phased LEO'] },
-  { name: 'Control / indirect', items: ['FixedBoundarySingleShooting — indirect single shooting method (GTOC 12 case study)'] },
-  { name: 'Conversion', items: ['PropagatorConversion — convert a numerical propagator to Keplerian', 'TLEConversion — get a numerical propagator from a TLE and back'] },
-  { name: 'Data', items: ['Context — instantiate and manage several data contexts'] },
+  { name: 'Attitude', items: ['EarthObservation: shows how to easily switch between day and night attitude modes'] },
+  { name: 'Bodies', items: [
+    'DEFile: reads a DEXXX binary file (JPL or IMCCE inpop ephemeris file) and writes a new one containing only the data asked by the user',
+    'Phasing: sets up a Sun-synchronous Earth-phased Low Earth Orbit',
+  ]},
+  { name: 'Control / indirect', items: ['FixedBoundarySingleShooting: shows how to use the indirect (single) shooting method of Orekit. The study case is inspired by the Global Trajectory Optimization Competition 12'] },
+  { name: 'Conversion', items: [
+    'PropagatorConversion: helps understand how a propagator can be converted to another with a different model. Here we convert a numerical propagator into an analytical Keplerian propagator',
+    'TLEConversion: shows how to get a numerical propagator from a TLE and back',
+  ]},
+  { name: 'Data', items: ['Context: explains how to instantiate several data contexts'] },
   {
     name: 'Estimation',
     items: [
-      'DSSTOrbitDetermination — batch least-square OD with DSST for a MEO satellite',
-      'GNSSOrbitDetermination — same with a numerical propagator',
-      'ExtendedSemianalyticalKalmanFilter — extended Kalman OD for LAGEOS 2 with laser ranging',
-      'KalmanNumericalOrbitDetermination — same with a numerical propagator',
-      'LaserRangingOrbitDetermination — same with batch least-square',
-      'ManeuverEstimation — maneuver parameter estimation with simulated measurements',
-      'NumericalOrbitDetermination — batch OD for a GTO satellite with range and AZEL',
-      'SequentialBatchLeastSquares — sequential batch OD with a numerical propagator',
-      'TLEBasedOrbitDetermination — batch OD with SGP4 for a MEO satellite',
-      'PerformanceTesting — large-scale OD performance benchmark',
+      'DSSTOrbitDetermination: batch least-square OD with a DSST propagator for a MEO (GNSS) satellite with RINEX measurements',
+      'GNSSOrbitDetermination: same but with a numerical propagator instead',
+      'ExtendedSemianalyticalKalmanFilter: extended Kalman OD with a DSST propagator for a geodesy (LAGEOS 2) satellite with laser ranging measurements',
+      'KalmanNumericalOrbitDetermination: same but with a numerical propagator instead',
+      'LaserRangingOrbitDetermination: same but with a batch least-square OD instead',
+      'ManeuverEstimation: maneuvers parameters\' estimation with simulated measurements',
+      'NumericalOrbitDetermination: batch least-square OD with a numerical propagator for a GTO satellite with range and AZEL measurements',
+      'SequentialBatchLeastSquares: an example of sequential batch least-square OD with a numerical propagator',
+      'TLEBasedOrbitDetermination: batch least-square OD with a SGP4 propagator (TLE) for a MEO (GNSS) satellite with precise ephemeris (PV measurements)',
+      'Performance / PerformanceTesting: simulates a large number of measurements on a large time slot to study Orekit OD performances',
     ]
   },
-  { name: 'Frames', items: ['Frames1, Frames2, Frames3 — different frame management examples'] },
-  { name: 'GNSS', items: ['DOPComputation — DOP over a geographic zone for a period', 'RinexObservationFile — reading RINEX observation files'] },
-  { name: 'Maneuvers', items: ['ApogeeManeuver — large apogee maneuver with ~1h constant thrust', 'ImpulseAtNode — impulse maneuver at node', 'StationKeeping — East-West GEO station keeping with DSST'] },
-  { name: 'Models', items: ['TidalDisplacements — compute station tidal displacements'] },
+  { name: 'Frames', items: ['Frames1-2-3: different examples of frame management'] },
+  { name: 'Gnss', items: [
+    'DOPComputation: shows a basic usage for computing the DOP over a geographic zone and for a period',
+    'RinexObservationFile: reading of Rinex observation files',
+  ]},
+  { name: 'Maneuvers', items: [
+    'ApogeeManeuver: large apogee maneuver with a long (~1h) constant thrust maneuver',
+    'ImpulseAtNode: shows how to perform a given impulse maneuver at node',
+    'StationKeeping: East-West GEO Station Keeping with impulse maneuvers using DSST propagator',
+  ]},
+  { name: 'Models', items: ['TidalDisplacements: shows how to compute stations tidal displacements'] },
   {
     name: 'Propagation',
     items: [
-      'CovariancePropagation — linear covariance propagation from a CCSDS OPM',
-      'DSSTPropagation — propagation with the DSST propagator',
-      'EphemerisMode — produce an ephemeris with Orekit',
-      'FieldPropagation — numerical propagation with Taylor-maps and Monte Carlo sampling',
-      'GNSSPropagation — propagation from a navigation message',
-      'GradientComputation — Jacobian of acceleration partial derivatives',
-      'GroundTrack — graphical ground track display',
-      'JupiterSwingBy — swing-by trajectory compared in EME2000, ICRF and Jupiter-centered frames',
-      'KeplerianPropagation — basic Keplerian propagator',
-      'NumericalPropagation — basic numerical propagator',
-      'TrackCorridor — track corridor display',
-      'VisibilityCheck — satellite / ground station visibility',
-      'VisibilityCircle — visibility circles on ground as seen from a satellite',
-      'CR3BP — Circular Restricted 3-Body Problem (Halo orbits, manifolds, multiple shooting)',
+      'CovariancePropagation: linear covariance propagation example, starting from a CCSDS OPM (Orbit Parameter Message)',
+      'DSSTPropagation: propagation with the DSST propagator',
+      'EphemerisMode: shows how to produce an ephemeris with Orekit',
+      'FieldPropagation: numerical propagation with Taylor-maps and a Monte Carlo sampling at the end',
+      'GNSSPropagation: propagation with a GNSS-adapted propagator, starting from a navigation message',
+      'GradientComputation: shows how to compute the Jacobian containing the partial derivatives of the acceleration with respect the the spacecraft coordinates',
+      'GroundTrack: graphical display of ground tracks',
+      'JupiterSwingBy: Swing-by trajectory about Jupiter compared in EME2000, ICRF and Jupiter-centered inertial reference frame',
+      'KeplerianPropagation: propagation with a basic Keplerian propagator',
+      'NumericalPropagation: propagation with a basic numerical propagator',
+      'PropagationInNonInertialFrame: introduction to orbital integration using SingleBodyAttraction and non-inertial frames',
+      'PropagationInRotatingFrame: Compared propagation of a LEO satellite in Earth-centered inertial and non-inertial frames: EME2000 and ITRF',
+      'TrackCorridor: tutorial for track corridor display',
+      'VisibilityCheck: shows how to easily check for visibility between a satellite and a ground station',
+      'VisibilityCircle: computes visibility circles on ground as seen from a satellite',
+      'CR3BP: Circular Restricted 3-Body Problem',
+      'CR3BP > CR3BPSphereCrossingDetector: a detector for checking if a probe crashes on one of the two primary bodies in C3RBP',
+      'CR3BP > EarthMoonHaloOrbit: computation of a northern Halo Orbit around Earth-Moon L1',
+      'CR3BP > ManifoldTransfer: computation of a transfer from Earth-Moon L2 Halo Orbit to High Lunar Orbit using unstable manifolds',
+      'CR3BP > PropagationInCR3BP: example of propagation in the Circular Restricted 3-Body problem with Orekit',
+      'CR3BP > SunEarthMultipleShooter: correction of a trajectory using multiple shooting method in the Sun-Earth CR3BP',
+      'CR3BP > YZPlaneCrossingDetector: a detector for YZ Planes crossing within C3RBP',
     ]
   },
-  { name: 'Time', items: ['Time1 — dates and time scales'] },
+  { name: 'Time', items: ['Time1: tutorial for dates support'] },
 ]
 
 const pythonTutorials = [
   {
-    title: 'Orekit in Python — The basics',
+    title: 'Orekit in Python - The basics',
     href: 'https://gitlab.orekit.org/orekit-labs/python-wrapper/blob/master/examples/The_Basics.ipynb',
-    desc: 'Setting up Orekit in a Python environment with the JPype wrapper.'
+    desc: 'This tutorial shows how to setup the use of Orekit in a Python environment.'
   },
   {
     title: 'TLE Propagation',
     href: 'https://gitlab.orekit.org/orekit-labs/python-wrapper/blob/master/examples/TLE_Propagation.ipynb',
-    desc: 'Propagate NASA Two-Line Elements (TLE) using the Python-wrapped Orekit.'
+    desc: 'This is a short example of how to propagate NASA Two Line Elements (TLE) in the python-wrapped Orekit.'
   },
   {
     title: 'Ground track plot',
     href: 'https://gitlab.orekit.org/orekit-labs/python-wrapper/blob/master/examples/orekit_map.ipynb',
-    desc: 'Plot the ground track of a satellite using Python Basemap and Matplotlib.'
+    desc: 'This tutorial shows how to plot the ground track of a satellite, using the Python Basemap module for mapping and Matplotlib for plotting.'
   },
 ]
 </script>
@@ -242,25 +265,24 @@ const pythonTutorials = [
 .page { padding: 56px 24px; }
 .inner { max-width: 960px; margin: 0 auto; }
 
-.hero-section { margin-bottom: 56px; padding-bottom: 40px; border-bottom: 1px solid var(--border); }
-h1 { font-size: 36px; font-weight: 300; color: #fff; margin-bottom: 20px; }
-.lead { font-size: 16px; color: var(--text-secondary); line-height: 1.75; max-width: 720px; }
+h1 { font-size: 36px; font-weight: 300; color: #fff; margin-bottom: 28px; }
+h2 { font-size: 22px; font-weight: 400; color: #fff; margin-bottom: 16px; }
+h3 { font-size: 18px; font-weight: 500; color: var(--text-primary); margin-bottom: 12px; }
 
 .section { margin-bottom: 56px; padding-bottom: 40px; border-bottom: 1px solid var(--border); }
 .section.last { border-bottom: none; }
-h2 { font-size: 22px; font-weight: 400; color: #fff; margin-bottom: 20px; }
-.body-text { font-size: 14px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 20px; }
+.body-text { font-size: 16px; color: var(--text-secondary); line-height: 1.8; margin-bottom: 20px; }
 
 .inline-link { color: var(--accent); text-decoration: none; }
 .inline-link:hover { text-decoration: underline; }
 
 /* version buttons */
-.version-row { display: flex; flex-wrap: wrap; gap: 6px; }
+.version-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
 .version-btn {
-  padding: 5px 14px;
+  padding: 7px 16px;
   border: 1px solid var(--border-light);
   border-radius: 4px;
-  font-size: 12px;
+  font-size: 14px;
   color: var(--text-secondary);
   background: var(--bg-card);
   text-decoration: none;
@@ -284,13 +306,13 @@ h2 { font-size: 22px; font-weight: 400; color: #fff; margin-bottom: 20px; }
   padding: 16px 20px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
   text-decoration: none;
   transition: background 0.15s;
 }
 .tutorial-item:hover { background: var(--bg-card-hover); text-decoration: none; }
-.tut-title { font-size: 14px; color: var(--accent); }
-.tut-desc  { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+.tut-title { font-size: 15px; color: var(--accent); }
+.tut-desc  { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
 
 /* java categories */
 .category-list {
@@ -311,7 +333,7 @@ h2 { font-size: 22px; font-weight: 400; color: #fff; margin-bottom: 20px; }
   align-items: start;
 }
 .cat-name {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 500;
   color: var(--text-primary);
   padding-top: 2px;
@@ -323,9 +345,9 @@ h2 { font-size: 22px; font-weight: 400; color: #fff; margin-bottom: 20px; }
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
 }
-.cat-items li { font-size: 12px; color: var(--text-secondary); line-height: 1.5; }
+.cat-items li { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
 
 /* oss cards */
 .oss-card {
@@ -336,6 +358,6 @@ h2 { font-size: 22px; font-weight: 400; color: #fff; margin-bottom: 20px; }
   margin-bottom: 12px;
 }
 .oss-card:last-child { margin-bottom: 0; }
-.oss-title { font-size: 14px; font-weight: 500; margin-bottom: 8px; }
-.oss-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.7; margin: 0; }
+.oss-title { font-size: 16px; font-weight: 500; margin-bottom: 10px; }
+.oss-desc { font-size: 15px; color: var(--text-secondary); line-height: 1.75; margin: 0; }
 </style>
