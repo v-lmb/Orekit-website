@@ -22,15 +22,11 @@
               <span class="di-title">API reference (Javadoc)</span>
               <span class="di-desc">All versions from 6.1 to 13.x</span>
             </NuxtLink>
-            <a href="#" class="dropdown-item">
-              <span class="di-title">User manual</span>
-              <span class="di-desc">In-depth module guide</span>
-            </a>
-            <a href="#" class="dropdown-item">
+            <NuxtLink to="/tutorials" class="dropdown-item">
               <span class="di-title">Tutorials</span>
               <span class="di-desc">Step-by-step examples</span>
-            </a>
-            <a href="#" class="dropdown-item">
+            </NuxtLink>
+            <a href="https://gitlab.orekit.org/orekit-labs/python-wrapper/-/wikis/home" target="_blank" rel="noopener" class="dropdown-item">
               <span class="di-title">Python wrapper</span>
               <span class="di-desc">Getting started with Python</span>
             </a>

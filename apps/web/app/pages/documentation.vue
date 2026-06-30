@@ -24,13 +24,13 @@
             <p>In-depth explanations of all Orekit modules: frames, propagators, attitude, orbit determination, and more.</p>
             <span class="card-cta">Read the manual →</span>
           </a>
-          <a href="#" class="doc-card">
+          <NuxtLink to="/tutorials" class="doc-card">
             <span class="card-label">Step by step</span>
             <h2>Tutorials</h2>
             <p>Hands-on examples covering common use cases — propagating a TLE, computing visibility windows, running a Kalman filter.</p>
             <span class="card-cta">See all tutorials →</span>
-          </a>
-          <a href="#" class="doc-card">
+          </NuxtLink>
+          <a href="https://gitlab.orekit.org/orekit-labs/python-wrapper/-/wikis/home" target="_blank" rel="noopener" class="doc-card">
             <span class="card-label">Python</span>
             <h2>Python wrapper</h2>
             <p>Getting started guide for Orekit in Python via JPype. Installation, configuration, and first examples.</p>
