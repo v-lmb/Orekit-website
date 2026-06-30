@@ -38,7 +38,7 @@ def parse_tle(text: str, group: str) -> list[dict]:
         name = lines[i].strip()
         line1 = lines[i + 1].strip()
         line2 = lines[i + 2].strip()
-        satellite_id = line1[2:7].strip()  # NORAD ID is at fixed posistions 2-7 in line 1
+        satellite_id = line1[2:7].strip()  # NORAD ID is at fixed positions 2-7 in line 1
         entries.append({
             "satellite_id": satellite_id,
             "name": name,
@@ -53,7 +53,9 @@ def parse_tle(text: str, group: str) -> list[dict]:
 def ingest():
     """
     Opens a database session, fetches and parses TLE data for each group,
-    and upserts satellites / inserting new ones or updating existing ones
+    and upserts into the database :
+    inserts new satellites or updates existing ones
+    ingested_at is overwritten on every run to track the last update time
     """
     db = SessionLocal()
     try:
