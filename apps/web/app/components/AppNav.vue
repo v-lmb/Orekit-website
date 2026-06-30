@@ -14,22 +14,27 @@
             Documentation <span class="chevron">▾</span>
           </NuxtLink>
           <div class="dropdown" v-show="docOpen">
-            <NuxtLink to="/documentation" class="dropdown-item">
-              <span class="di-title">Documentation overview</span>
-              <span class="di-desc">All docs in one place</span>
-            </NuxtLink>
             <NuxtLink to="/doc-javadoc" class="dropdown-item">
-              <span class="di-title">API reference (Javadoc)</span>
-              <span class="di-desc">All versions from 6.1 to 13.x</span>
+              <span class="di-title">API documentation</span>
+              <span class="di-desc">Javadoc for all versions</span>
+            </NuxtLink>
+            <NuxtLink to="/doc-maven" class="dropdown-item">
+              <span class="di-title">Technical documentation</span>
+              <span class="di-desc">Architecture and Maven site</span>
             </NuxtLink>
             <NuxtLink to="/tutorials" class="dropdown-item">
               <span class="di-title">Tutorials</span>
               <span class="di-desc">Step-by-step examples</span>
             </NuxtLink>
             <a href="https://gitlab.orekit.org/orekit-labs/python-wrapper/-/wikis/home" target="_blank" rel="noopener" class="dropdown-item">
-              <span class="di-title">Python wrapper</span>
+              <span class="di-title">Python wrapper documentation</span>
               <span class="di-desc">Getting started with Python</span>
             </a>
+            <div class="dropdown-divider"></div>
+            <NuxtLink to="/publications" class="dropdown-item">
+              <span class="di-title">Scientific publications</span>
+              <span class="di-desc">Papers citing and using Orekit</span>
+            </NuxtLink>
           </div>
         </li>
 
@@ -158,6 +163,12 @@ const communityOpen = ref(false)
 .dropdown-item:hover { background: var(--bg-card); text-decoration: none; }
 .di-title { font-size: 13px; color: var(--text-primary); }
 .di-desc  { font-size: 11px; color: var(--text-muted); }
+
+.dropdown-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 4px 0;
+}
 
 .btn-gitlab {
   font-size: 12px;
