@@ -2,197 +2,243 @@
   <div class="page">
     <div class="inner">
 
-      <section class="hero-section">
-        <h1>License</h1>
-        <p class="lead">
-          Orekit is distributed under the <strong>Apache License, Version 2.0</strong>.
-          You are free to use, modify, and distribute it — in open-source or commercial projects —
-          as long as you preserve the copyright notice and license text.
-        </p>
-      </section>
+      <h1>Orekit license</h1>
 
-      <section class="section">
-        <h2>What the Apache 2.0 license allows</h2>
-        <div class="permissions-grid">
-          <div class="perm-card allowed" v-for="item in allowed" :key="item">
-            <span class="icon">✓</span>
-            <span>{{ item }}</span>
-          </div>
-          <div class="perm-card required" v-for="item in required" :key="item">
-            <span class="icon req">!</span>
-            <span>{{ item }}</span>
-          </div>
-          <div class="perm-card forbidden" v-for="item in forbidden" :key="item">
-            <span class="icon forb">✕</span>
-            <span>{{ item }}</span>
-          </div>
-        </div>
-        <div class="legend">
-          <span class="leg-item"><span class="dot green"></span> Permitted</span>
-          <span class="leg-item"><span class="dot yellow"></span> Required</span>
-          <span class="leg-item"><span class="dot red"></span> Not permitted</span>
-        </div>
-      </section>
+      <p class="body-text">
+        Orekit is distributed under the
+        <a href="https://www.apache.org/licenses/LICENSE-2.0.html" target="_blank" rel="noopener" class="inline-link">Apache License version 2.0</a>,
+        a well known business-friendly license.
+      </p>
 
-      <section class="section">
-        <h2>Copyright</h2>
-        <div class="code-block">
-          <p>Copyright 2002-2025 CS GROUP and contributors</p>
-          <br>
-          <p>Licensed under the Apache License, Version 2.0 (the "License");</p>
-          <p>you may not use this file except in compliance with the License.</p>
-          <p>You may obtain a copy of the License at</p>
-          <br>
-          <p>&nbsp;&nbsp;&nbsp;&nbsp;http://www.apache.org/licenses/LICENSE-2.0</p>
-          <br>
-          <p>Unless required by applicable law or agreed to in writing, software</p>
-          <p>distributed under the License is distributed on an "AS IS" BASIS,</p>
-          <p>WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</p>
-          <p>See the License for the specific language governing permissions and</p>
-          <p>limitations under the License.</p>
-        </div>
-      </section>
+      <pre class="license-text">                                 Apache License
+                           Version 2.0, January 2004
+                        http://www.apache.org/licenses/
 
-      <section class="section">
-        <h2>Third-party dependencies</h2>
-        <p class="body-text">
-          Orekit depends on a number of open-source libraries. All are compatible with the
-          Apache 2.0 license. The full dependency list with individual licenses is available
-          in the Maven site for each release.
-        </p>
-        <div class="deps-table">
-          <div class="dep-row header">
-            <span>Library</span><span>License</span><span>Scope</span>
-          </div>
-          <div v-for="dep in deps" :key="dep.name" class="dep-row">
-            <span class="dep-name">{{ dep.name }}</span>
-            <span class="dep-license">{{ dep.license }}</span>
-            <span class="dep-scope">{{ dep.scope }}</span>
-          </div>
-        </div>
-      </section>
+   TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
 
-      <section class="section last">
-        <h2>Full license text</h2>
-        <a href="https://www.apache.org/licenses/LICENSE-2.0" class="btn-secondary" target="_blank" rel="noopener">
-          Read the full Apache 2.0 license text →
-        </a>
-      </section>
+   1. Definitions.
+
+      "License" shall mean the terms and conditions for use, reproduction,
+      and distribution as defined by Sections 1 through 9 of this document.
+
+      "Licensor" shall mean the copyright owner or entity authorized by
+      the copyright owner that is granting the License.
+
+      "Legal Entity" shall mean the union of the acting entity and all
+      other entities that control, are controlled by, or are under common
+      control with that entity. For the purposes of this definition,
+      "control" means (i) the power, direct or indirect, to cause the
+      direction or management of such entity, whether by contract or
+      otherwise, or (ii) ownership of fifty percent (50%) or more of the
+      outstanding shares, or (iii) beneficial ownership of such entity.
+
+      "You" (or "Your") shall mean an individual or Legal Entity
+      exercising permissions granted by this License.
+
+      "Source" form shall mean the preferred form for making modifications,
+      including but not limited to software source code, documentation
+      source, and configuration files.
+
+      "Object" form shall mean any form resulting from mechanical
+      transformation or translation of a Source form, including but
+      not limited to compiled object code, generated documentation,
+      and conversions to other media types.
+
+      "Work" shall mean the work of authorship, whether in Source or
+      Object form, made available under the License, as indicated by a
+      copyright notice that is included in or attached to the work
+      (an example is provided in the Appendix below).
+
+      "Derivative Works" shall mean any work, whether in Source or Object
+      form, that is based on (or derived from) the Work and for which the
+      editorial revisions, annotations, elaborations, or other modifications
+      represent, as a whole, an original work of authorship. For the purposes
+      of this License, Derivative Works shall not include works that remain
+      separable from, or merely link (or bind by name) to the interfaces of,
+      the Work and Derivative Works thereof.
+
+      "Contribution" shall mean any work of authorship, including
+      the original version of the Work and any modifications or additions
+      to that Work or Derivative Works thereof, that is intentionally
+      submitted to Licensor for inclusion in the Work by the copyright owner
+      or by an individual or Legal Entity authorized to submit on behalf of
+      the copyright owner. For the purposes of this definition, "submitted"
+      means any form of electronic, verbal, or written communication sent
+      to the Licensor or its representatives, including but not limited to
+      communication on electronic mailing lists, source code control systems,
+      and issue tracking systems that are managed by, or on behalf of, the
+      Licensor for the purpose of discussing and improving the Work, but
+      excluding communication that is conspicuously marked or otherwise
+      designated in writing by the copyright owner as "Not a Contribution."
+
+      "Contributor" shall mean Licensor and any individual or Legal Entity
+      on behalf of whom a Contribution has been received by Licensor and
+      subsequently incorporated within the Work.
+
+   2. Grant of Copyright License. Subject to the terms and conditions of
+      this License, each Contributor hereby grants to You a perpetual,
+      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+      copyright license to reproduce, prepare Derivative Works of,
+      publicly display, publicly perform, sublicense, and distribute the
+      Work and such Derivative Works in Source or Object form.
+
+   3. Grant of Patent License. Subject to the terms and conditions of
+      this License, each Contributor hereby grants to You a perpetual,
+      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+      (except as stated in this section) patent license to make, have made,
+      use, offer to sell, sell, import, and otherwise transfer the Work,
+      where such license applies only to those patent claims licensable
+      by such Contributor that are necessarily infringed by their
+      Contribution(s) alone or by combination of their Contribution(s)
+      with the Work to which such Contribution(s) was submitted. If You
+      institute patent litigation against any entity (including a
+      cross-claim or counterclaim in a lawsuit) alleging that the Work
+      or a Contribution incorporated therein within the Work constitutes direct
+      or contributory patent infringement, then any patent licenses
+      granted to You under this License for that Work shall terminate
+      as of the date such litigation is filed.
+
+   4. Redistribution. You may reproduce and distribute copies of the
+      Work or Derivative Works thereof in any medium, with or without
+      modifications, and in Source or Object form, provided that You
+      meet the following conditions:
+
+      (a) You must give any other recipients of the Work or
+          Derivative Works a copy of this License; and
+
+      (b) You must cause any modified files to carry prominent notices
+          stating that You changed the files; and
+
+      (c) You must retain, in the Source form of any Derivative Works
+          that You distribute, all copyright, patent, trademark, and
+          attribution notices from the Source form of the Work,
+          excluding those notices that do not pertain to any part of
+          the Derivative Works; and
+
+      (d) If the Work includes a "NOTICE" text file as part of its
+          distribution, then any Derivative Works that You distribute must
+          include a readable copy of the attribution notices contained
+          within such NOTICE file, excluding those notices that do not
+          pertain to any part of the Derivative Works, in at least one
+          of the following places: within a NOTICE text file distributed
+          as part of the Derivative Works; within the Source form or
+          documentation, if provided along with the Derivative Works; or,
+          within a display generated by the Derivative Works, if and
+          wherever such third-party notices normally appear. The contents
+          of the NOTICE file are for informational purposes only and
+          do not modify the License. You may add Your own attribution
+          notices within Derivative Works that You distribute, alongside
+          or as an addendum to the NOTICE text from the Work, provided
+          that such additional attribution notices cannot be construed
+          as modifying the License.
+
+      You may add Your own copyright statement to Your modifications and
+      may provide additional or different license terms and conditions
+      for use, reproduction, or distribution of Your modifications, or
+      for any such Derivative Works as a whole, provided Your use,
+      reproduction, and distribution of the Work otherwise complies with
+      the conditions stated in this License.
+
+   5. Submission of Contributions. Unless You explicitly state otherwise,
+      any Contribution intentionally submitted for inclusion in the Work
+      by You to the Licensor shall be under the terms and conditions of
+      this License, without any additional terms or conditions.
+      Notwithstanding the above, nothing herein shall supersede or modify
+      the terms of any separate license agreement you may have executed
+      with Licensor regarding such Contributions.
+
+   6. Trademarks. This License does not grant permission to use the trade
+      names, trademarks, service marks, or product names of the Licensor,
+      except as required for reasonable and customary use in describing the
+      origin of the Work and reproducing the content of the NOTICE file.
+
+   7. Disclaimer of Warranty. Unless required by applicable law or
+      agreed to in writing, Licensor provides the Work (and each
+      Contributor provides its Contributions) on an "AS IS" BASIS,
+      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+      implied, including, without limitation, any warranties or conditions
+      of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A
+      PARTICULAR PURPOSE. You are solely responsible for determining the
+      appropriateness of using or redistributing the Work and assume any
+      risks associated with Your exercise of permissions under this License.
+
+   8. Limitation of Liability. In no event and under no legal theory,
+      whether in tort (including negligence), contract, or otherwise,
+      unless required by applicable law (such as deliberate and grossly
+      negligent acts) or agreed to in writing, shall any Contributor be
+      liable to You for damages, including any direct, indirect, special,
+      incidental, or consequential damages of any character arising as a
+      result of this License or out of the use or inability to use the
+      Work (including but not limited to damages for loss of goodwill,
+      work stoppage, computer failure or malfunction, or any and all
+      other commercial damages or losses), even if such Contributor
+      has been advised of the possibility of such damages.
+
+   9. Accepting Warranty or Additional Liability. While redistributing
+      the Work or Derivative Works thereof, You may choose to offer,
+      and charge a fee for, acceptance of support, warranty, indemnity,
+      or other liability obligations and/or rights consistent with this
+      License. However, in accepting such obligations, You may act only
+      on Your own behalf and on Your sole responsibility, not on behalf
+      of any other Contributor, and only if You agree to indemnify,
+      defend, and hold each Contributor harmless for any liability
+      incurred by, or claims asserted against, such Contributor by reason
+      of your accepting any such warranty or additional liability.
+
+   END OF TERMS AND CONDITIONS
+
+   APPENDIX: How to apply the Apache License to your work.
+
+      To apply the Apache License to your work, attach the following
+      boilerplate notice, with the fields enclosed by brackets "[]"
+      replaced with your own identifying information. (Don't include
+      the brackets!)  The text should be enclosed in the appropriate
+      comment syntax for the file format. We also recommend that a
+      file or class name and description of purpose be included on the
+      same "printed page" as the copyright notice for easier
+      identification within third-party archives.
+
+   Copyright [yyyy] [name of copyright owner]
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.</pre>
 
     </div>
   </div>
 </template>
 
-<script setup>
-const allowed = [
-  'Commercial use',
-  'Modification',
-  'Distribution',
-  'Patent use',
-  'Private use',
-]
-const required = [
-  'Include the license and copyright notice',
-  'State changes made to the code',
-]
-const forbidden = [
-  'Trademark use',
-  'Liability',
-  'Warranty',
-]
-
-const deps = [
-  { name: 'Hipparchus',    license: 'Apache 2.0', scope: 'Compile' },
-  { name: 'Jakarta Commons Math', license: 'Apache 2.0', scope: 'Compile' },
-  { name: 'JPype',         license: 'Apache 2.0', scope: 'Python wrapper' },
-  { name: 'JUnit 5',       license: 'EPL 2.0',   scope: 'Test only' },
-  { name: 'Mockito',       license: 'MIT',        scope: 'Test only' },
-]
-</script>
-
 <style scoped>
 .page { padding: 56px 24px; }
 .inner { max-width: 860px; margin: 0 auto; }
 
-.hero-section {
-  margin-bottom: 56px;
-  padding-bottom: 40px;
-  border-bottom: 1px solid var(--border);
-}
-h1 { font-size: 36px; font-weight: 300; color: #fff; margin-bottom: 20px; }
-.lead { font-size: 16px; color: var(--text-secondary); line-height: 1.75; }
-.lead strong { color: var(--text-primary); }
+h1 { font-size: 28px; font-weight: 300; color: #fff; margin-bottom: 20px; }
+.body-text { font-size: 16px; color: var(--text-secondary); line-height: 1.8; margin-bottom: 24px; }
 
-.section { margin-bottom: 56px; padding-bottom: 40px; border-bottom: 1px solid var(--border); }
-.section.last { border-bottom: none; }
-h2 { font-size: 22px; font-weight: 400; color: #fff; margin-bottom: 24px; }
-.body-text { font-size: 14px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 20px; }
-
-.permissions-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 16px;
-}
-.perm-card {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 14px;
-  border-radius: 4px;
-  font-size: 13px;
-  border: 1px solid;
-}
-.perm-card.allowed  { background: rgba(0,208,132,0.06); border-color: rgba(0,208,132,0.25); color: #00d084; }
-.perm-card.required { background: rgba(255,180,0,0.06); border-color: rgba(255,180,0,0.25); color: #ffb400; }
-.perm-card.forbidden{ background: rgba(255,80,80,0.06); border-color: rgba(255,80,80,0.25); color: #ff5050; }
-.icon { font-size: 12px; font-weight: 700; }
-
-.legend { display: flex; gap: 20px; }
-.leg-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-muted); }
-.dot { width: 8px; height: 8px; border-radius: 50%; }
-.dot.green  { background: #00d084; }
-.dot.yellow { background: #ffb400; }
-.dot.red    { background: #ff5050; }
-
-.code-block {
-  background: #08080f;
+.license-text {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: 6px;
-  padding: 24px;
+  padding: 24px max(16px, calc(50% - 320px));
   font-family: 'Courier New', monospace;
   font-size: 13px;
-  line-height: 1.7;
+  line-height: 1.6;
   color: var(--text-secondary);
+  white-space: pre;
+  overflow-x: auto;
 }
 
-.deps-table {
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  overflow: hidden;
-}
-.dep-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  padding: 12px 16px;
-  border-bottom: 1px solid var(--border);
-  font-size: 13px;
-}
-.dep-row:last-child { border-bottom: none; }
-.dep-row.header { background: var(--bg-card); color: var(--text-muted); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; }
-.dep-row:not(.header) { background: var(--bg-secondary); color: var(--text-secondary); }
-.dep-row:not(.header):hover { background: var(--bg-card); }
-.dep-name { color: var(--text-primary); }
-
-.btn-secondary {
-  display: inline-block;
-  border: 1px solid var(--border-light);
-  color: var(--text-secondary);
-  padding: 10px 20px;
-  border-radius: 4px;
-  font-size: 14px;
-  text-decoration: none;
-  transition: all 0.2s;
-}
-.btn-secondary:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+.inline-link { color: var(--accent); text-decoration: none; }
+.inline-link:hover { text-decoration: underline; }
 </style>
