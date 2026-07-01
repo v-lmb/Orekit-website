@@ -1,12 +1,46 @@
 # Orekit Website - V1
 
-A redesign of [orekit.org](https://www.orekit.org) built as a Holberton School portfolio project
+## Description
+**Orekit is an open source astrodynamics library** developed by CS Group and maintained by a community of space engineers.\
+It provides low-level components for orbital mechanics: orbit propagation, attitude computation, coordinate frame transformations, and TLE (Two-Line Element) processing. It is written in _Java_ and widely used in the space industry.
 
-**Team :**
-- [Allix Robin](https://github.com/AllixRbn) : Frontend (Nuxt 3, CesiumJS)
-- [Virginie Lombarte](https://github.com/v-lmb) : Backend (FastAPI, PostgreSQL)
+This project is a full redesign of [orekit.org](https://www.orekit.org/), built as a Holberton School portfolio project.\
+It replaces the existing Jekyll static site with a modern stack: a Nuxt 3 static frontend featuring a live CesiumJS 3D satellite tracking viewer, backed by a FastAPI REST API that ingests and serves TLE orbital data from Celestrak.
 
-**Maintainer :** Orekit community
+---
+
+## Project Structure
+
+```
+Orekit-website/
+│
+├── apps/
+│   ├── api/                    # FastAPI backend
+│   │   ├── main.py             # App entry point, routes, middleware
+│   │   ├── models.py           # SQLAlchemy Tle model
+│   │   ├── database.py         # DB session factory
+│   │   ├── ingest.py           # Celestrak TLE ingestion
+│   │   ├── alembic/            # Database migrations
+│   │   └── tests/              # pytest + testcontainers + locust
+│   └── web/                    # Nuxt 3 frontend
+│       ├── app/                # App shell + components
+│       └── pages/              # Vue pages (one file per route)
+│
+├── compose/
+│   └── docker-compose.yml
+│
+├── docs/
+│   ├── api.md                  # API reference
+│   ├── data-model.md           # Database schema
+│   ├── RUNBOOK.md              # Operational runbook
+│   ├── security.md             # Security checklist
+│   ├── openapi.json            # Archived OpenAPI spec
+│   ├── load-test.md            # Load test results
+│   └── sprints/                # Sprint plans, reviews, retrospectives
+│
+├── .env.example
+└── README.md
+```
 
 ---
 
@@ -70,20 +104,21 @@ All three services are orchestrated locally with **Docker Compose** (`compose/do
 
 ---
 
-## Stack
+## Technologies
 
-|    Layer      |       Technology                              |
-|---------------|-----------------------------------------------|
-| Frontend      | Nuxt 3 (Vue 3 + Vite), static generation      |
-| 3D viewer     | CesiumJS + satellite.js (SGP4)                |
-| Backend       | FastAPI, Python 3.11                          |
-| ORM           | SQLAlchemy 2 + Alembic                        |
-| Database      | PostgreSQL 15                                 |
-| HTTP client   | httpx + tenacity                              |
-| Scheduler     | APScheduler                                   |
-| Rate limiting | slowapi                                       |
-| CI            | GitHub Actions (lint > test > build)          |
-| Registry      | ghcr.io                                       |
+| Layer | Technology |
+|-------|------------|
+| Frontend | ![Nuxt 3](https://img.shields.io/badge/Nuxt_3-00DC82?style=flat&logo=nuxt.js&logoColor=white) ![Vue 3](https://img.shields.io/badge/Vue_3-4FC08D?style=flat&logo=vue.js&logoColor=white) ![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat&logo=vite&logoColor=white) static generation |
+| 3D viewer | ![CesiumJS](https://img.shields.io/badge/CesiumJS-6CADDF?style=flat&logo=cesium&logoColor=white) + satellite.js (SGP4) |
+| Backend | ![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat&logo=fastapi&logoColor=white) ![Python](https://img.shields.io/badge/Python_3.11-3776AB?style=flat&logo=python&logoColor=white) |
+| ORM | ![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy_2-D71F00?style=flat&logoColor=white) + Alembic |
+| Database | ![PostgreSQL](https://img.shields.io/badge/PostgreSQL_15-4169E1?style=flat&logo=postgresql&logoColor=white) |
+| HTTP client | ![httpx](https://img.shields.io/badge/httpx-000000?style=flat&logoColor=white) + tenacity |
+| Scheduler | APScheduler |
+| Rate limiting | slowapi |
+| CI | ![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?style=flat&logo=github-actions&logoColor=white) lint → test → build |
+| Registry | ![ghcr.io](https://img.shields.io/badge/ghcr.io-181717?style=flat&logo=github&logoColor=white) |
+| Testing | ![pytest](https://img.shields.io/badge/pytest-0A9EDC?style=flat&logo=pytest&logoColor=white) ![Locust](https://img.shields.io/badge/Locust-00B140?style=flat&logoColor=white) |
 
 ---
 
@@ -141,9 +176,11 @@ Copy `.env.example` to `apps/api/.env` and fill in the values
 | GET | `/api/tle` | List TLEs ; params: `limit`, `offset`, `group` |
 | GET | `/api/tle/{satellite_id}` | Get one satellite by NORAD ID |
 
-Rate limit : 60 requests/minute per IP on TLE endpoints
+Rate limit :\
+60 requests/minute per IP on TLE endpoints
 
-Full OpenAPI spec : [`docs/openapi.json`](docs/openapi.json), interactive docs at `/docs` when the API is running
+Full OpenAPI spec :\
+[`docs/openapi.json`](docs/openapi.json), interactive docs at `/docs` when the API is running
 
 ---
 
@@ -168,7 +205,8 @@ pip install locust
 locust -f apps/api/tests/locustfile.py --host http://localhost:8000
 ```
 
-Reference baseline : 5.0 RPS, p95 = 10 ms, 0 failures (10 concurrent users, 2 min)
+Reference baseline :\
+5.0 RPS, p95 = 10 ms, 0 failures (10 concurrent users, 2 min)
 
 ---
 
@@ -182,33 +220,6 @@ GitHub Actions runs three jobs on every push :
 
 ---
 
-## Project Structure
-
-```
-apps/
-  api/            # FastAPI backend
-    main.py       # App entry point, routes, middleware
-    models.py     # SQLAlchemy Tle model
-    database.py   # DB session factory
-    ingest.py     # Celestrak TLE ingestion
-    alembic/      # Database migrations
-    tests/        # pytest + testcontainers + locust
-  web/            # Nuxt 3 frontend
-    pages/        # Vue pages
-    app/          # App shell
-compose/
-  docker-compose.yml
-docs/
-  api.md          # API reference
-  data-model.md   # Database schema
-  RUNBOOK.md      # Operational runbook
-  security.md     # Security checklist
-  openapi.json    # Archived OpenAPI spec
-  load-test.md    # Load test results
-```
-
----
-
 ## Documentation
 
 - [API reference](docs/api.md)
@@ -216,3 +227,23 @@ docs/
 - [Runbook](docs/RUNBOOK.md)
 - [Security checklist](docs/security.md)
 - [Load test results](docs/load-test.md)
+
+---
+
+## Team
+- [Allix Robin](https://github.com/AllixRbn) : Frontend (Nuxt 3, CesiumJS)
+- [Virginie Lombarte](https://github.com/v-lmb) : Backend (FastAPI, PostgreSQL)
+
+**Maintainer :**\
+Vincent CUCCHIETTI and Orekit's community
+
+---
+
+## Acknowledgements
+
+Special thanks to **Vincent CUCCHIETTI**, maintainer of the Orekit project, for his availability, technical guidance, and trust in letting us redesign the official website.
+
+Thanks to the **Orekit community** for building and maintaining an exceptional open source astrodynamics library that made this project meaningful.
+
+Thanks to the **Holberton School team**, staff and peers, for their support and feedback throughout the project.
+
