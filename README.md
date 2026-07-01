@@ -1,5 +1,7 @@
 # Orekit Website - V1
 
+![Banner](docs/assets/README_banner.png)
+
 ## Description
 **Orekit is an open source astrodynamics library** developed by CS Group and maintained by a community of space engineers.\
 It provides low-level components for orbital mechanics: orbit propagation, attitude computation, coordinate frame transformations, and TLE (Two-Line Element) processing. It is written in _Java_ and widely used in the space industry.
