@@ -10,7 +10,7 @@
         <div class="version-group">
           <h3>Under Development :</h3>
           <div class="version-row">
-            <a href="https://www.orekit.org/site-orekit-latest/apidocs/" target="_blank" rel="noopener" class="version-btn highlight">UD</a>
+            <a href="https://www.orekit.org/site-orekit-development/apidocs/" target="_blank" rel="noopener" class="version-btn highlight">UD</a>
           </div>
         </div>
 
@@ -47,14 +47,14 @@ h1 {
   margin-bottom: 8px;
 }
 .subtitle {
-  font-size: 14px;
+  font-size: 16px;
   color: var(--text-secondary);
   margin-bottom: 36px;
 }
 
 .version-group { margin-bottom: 28px; }
 .version-group h3 {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 500;
   color: var(--text-primary);
   margin-bottom: 12px;
@@ -67,10 +67,10 @@ h1 {
 }
 .version-btn {
   display: inline-block;
-  padding: 7px 14px;
+  padding: 8px 16px;
   border: 1px solid var(--border-light);
   border-radius: 4px;
-  font-size: 13px;
+  font-size: 14px;
   color: var(--text-secondary);
   background: var(--bg-card);
   transition: all 0.15s;

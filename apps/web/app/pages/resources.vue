@@ -2,54 +2,111 @@
   <div class="page">
     <div class="inner">
 
-      <section class="hero-section">
-        <h1>Resources</h1>
-        <p class="lead">External links, scientific publications, related projects, and useful tools for Orekit users.</p>
-      </section>
+      <h1>Third party resources</h1>
+
+      <p class="body-text">The following third party tools and resources are used on this website.</p>
 
       <section class="section">
-        <h2>Scientific publications</h2>
-        <p class="body-text">If you use Orekit in academic work, please cite the relevant paper.</p>
-        <div class="pub-list">
-          <div v-for="pub in publications" :key="pub.title" class="pub-item">
-            <div class="pub-meta">
-              <span class="pub-authors">{{ pub.authors }}</span>
-              <span class="pub-year">{{ pub.year }}</span>
-            </div>
-            <a href="#" class="pub-title">{{ pub.title }}</a>
-            <span class="pub-journal">{{ pub.journal }}</span>
-          </div>
+        <h2>Tools</h2>
+
+        <div class="resource-block">
+          <h3>Jekyll <span class="sub">a static website generator which merit publicity</span></h3>
+          <p class="body-text">
+            Copyright &copy; 2008&ndash;2025 &ndash; Tom Preston-Werner<br/>
+            License: <a href="https://github.com/jekyll/jekyll/blob/master/LICENSE" target="_blank" rel="noopener" class="inline-link">MIT License</a><br/>
+            Website: <a href="https://jekyllrb.com/" target="_blank" rel="noopener" class="inline-link">https://jekyllrb.com/</a>
+          </p>
+        </div>
+
+        <div class="resource-block">
+          <h3>Bootstrap <span class="sub">a popular HTML, CSS, and JS framework</span></h3>
+          <p class="body-text">
+            Copyright &copy; 2011&ndash;2019 &ndash; Twitter, Inc<br/>
+            License: <a href="https://github.com/twbs/bootstrap/blob/master/LICENSE" target="_blank" rel="noopener" class="inline-link">MIT License</a><br/>
+            Website: <a href="https://getbootstrap.com/" target="_blank" rel="noopener" class="inline-link">https://getbootstrap.com/</a>
+          </p>
         </div>
       </section>
 
       <section class="section">
-        <h2>Related projects</h2>
-        <div class="related-grid">
-          <a v-for="project in related" :key="project.name" href="#" class="related-card">
-            <span class="rel-name">{{ project.name }}</span>
-            <span class="rel-desc">{{ project.desc }}</span>
-          </a>
+        <h2>Themes</h2>
+
+        <div class="resource-block">
+          <h3>Spacelab <span class="sub">a nice Bootstrap theme</span></h3>
+          <p class="body-text">
+            Copyright &copy; 2013&ndash;2015 &ndash; Thomas Park<br/>
+            License: <a href="https://github.com/thomaspark/bootswatch/blob/gh-pages/LICENSE" target="_blank" rel="noopener" class="inline-link">MIT License</a><br/>
+            Website: <a href="https://bootswatch.com/" target="_blank" rel="noopener" class="inline-link">https://bootswatch.com/</a>
+          </p>
         </div>
       </section>
 
       <section class="section">
-        <h2>External data sources</h2>
-        <div class="data-list">
-          <a v-for="source in dataSources" :key="source.name" href="#" class="data-item">
-            <div>
-              <span class="data-name">{{ source.name }}</span>
-              <span class="data-desc">{{ source.desc }}</span>
-            </div>
-            <span class="data-arrow">→</span>
-          </a>
+        <h2>Fonts</h2>
+
+        <div class="resource-block">
+          <h3>Open Sans</h3>
+          <p class="body-text">
+            Copyright &copy; 2011 &ndash; Ascender Fonts<br/>
+            License: <a href="https://www.fontsquirrel.com/license/open-sans" target="_blank" rel="noopener" class="inline-link">Apache 2.0 License</a><br/>
+            Website: <a href="https://www.fontsquirrel.com/fonts/open-sans" target="_blank" rel="noopener" class="inline-link">https://www.fontsquirrel.com/fonts/open-sans</a>
+          </p>
+        </div>
+
+        <div class="resource-block">
+          <h3>Open Sans Condensed</h3>
+          <p class="body-text">
+            Copyright &copy; 2011 &ndash; Ascender Fonts<br/>
+            License: <a href="https://www.fontsquirrel.com/license/open-sans-condensed" target="_blank" rel="noopener" class="inline-link">Apache 2.0 License</a><br/>
+            Website: <a href="https://www.fontsquirrel.com/fonts/open-sans-condensed" target="_blank" rel="noopener" class="inline-link">https://www.fontsquirrel.com/fonts/open-sans-condensed</a>
+          </p>
+        </div>
+
+        <div class="resource-block">
+          <h3>Font Awesome</h3>
+          <p class="body-text">
+            Copyright &copy; 2012&ndash;2014 &ndash; Dave Gandy<br/>
+            License: <a href="https://fontawesome.com/license/free" target="_blank" rel="noopener" class="inline-link">SIL Open Font License 1.1</a><br/>
+            Website: <a href="https://fontawesome.com/" target="_blank" rel="noopener" class="inline-link">https://fontawesome.com/</a>
+          </p>
         </div>
       </section>
 
       <section class="section last">
-        <h2>Sponsors</h2>
-        <p class="body-text">These organisations have contributed funding, infrastructure, or engineering time to Orekit.</p>
-        <div class="sponsors-grid">
-          <div v-for="sponsor in sponsors" :key="sponsor" class="sponsor-tag">{{ sponsor }}</div>
+        <h2>Pictures</h2>
+
+        <div class="resource-block">
+          <h3>STS103-726-081 <span class="sub">Hubble Space Telescope (HST) photographed from the space shuttle Discovery</span></h3>
+          <p class="body-text">
+            Copyright &copy; 1999 &ndash; NASA (National Aeronautics and Space Administration)<br/>
+            License: <a href="https://en.wikipedia.org/wiki/Public_domain" target="_blank" rel="noopener" class="inline-link">Public domain</a><br/>
+            Website: <a href="https://commons.wikimedia.org/wiki/File:The_Hubble_Space_Telescope_(HST)_floats_gracefully_above_the_blue_Earth_after_release_from_Discovery%27s_robot_arm_after_a_successful_servicing_mission.jpg" target="_blank" rel="noopener" class="inline-link">Wikimedia Commons</a><br/>
+            Note: NASA had originally published this photograph on the spaceflight.nasa.gov website,
+            which it retired in 2021. As of April 2023, this photograph still does not appear in
+            <a href="https://images.nasa.gov/" target="_blank" rel="noopener" class="inline-link">NASA's new gallery</a>, but can be found on the Wikimedia Commons site.
+          </p>
+        </div>
+
+        <div class="resource-block">
+          <h3>S135-E-011864 <span class="sub">International Space Station (ISS) photographed from the space shuttle Atlantis</span></h3>
+          <p class="body-text">
+            Copyright &copy; 2011 &ndash; NASA (National Aeronautics and Space Administration)<br/>
+            License: <a href="https://en.wikipedia.org/wiki/Public_domain" target="_blank" rel="noopener" class="inline-link">Public domain</a><br/>
+            Website: <a href="https://commons.wikimedia.org/wiki/File:STS-135_final_flyaround_of_ISS_3.jpg" target="_blank" rel="noopener" class="inline-link">Wikimedia Commons</a><br/>
+            Note: NASA had originally published this photograph on the spaceflight.nasa.gov website,
+            which it retired in 2021. As of April 2023, this photograph still does not appear in
+            <a href="https://images.nasa.gov/" target="_blank" rel="noopener" class="inline-link">NASA's new gallery</a>, but can be found on the Wikimedia Commons site.
+          </p>
+        </div>
+
+        <div class="resource-block">
+          <h3>Himalayan Topography (based on ASTER data)</h3>
+          <p class="body-text">
+            Copyright &copy; 2009 &ndash; NASA (National Aeronautics and Space Administration), image by Robert Simmon<br/>
+            License: see <a href="https://earthobservatory.nasa.gov/image-use-policy" target="_blank" rel="noopener" class="inline-link">NASA's Earth Observatory image use policy</a>
+            (this image is freely available for re-publication or re-use, including commercial purposes)<br/>
+            Website: <a href="https://earthobservatory.nasa.gov/IOTD/view.php?id=39160" target="_blank" rel="noopener" class="inline-link">https://earthobservatory.nasa.gov/IOTD/view.php?id=39160</a>
+          </p>
         </div>
       </section>
 
@@ -57,84 +114,27 @@
   </div>
 </template>
 
-<script setup>
-const publications = [
-  {
-    authors: 'Maisonobe, L., Pommier-Maurussane, V.',
-    year: '2010',
-    title: 'Orekit: An Open-source Library for Operational Flight Dynamics Applications',
-    journal: '4th International Conference on Astrodynamics Tools and Techniques (ICATT)',
-  },
-  {
-    authors: 'Maisonobe, L., Pommier-Maurussane, V., Parraud, P.',
-    year: '2018',
-    title: 'Orekit: 10 years of accurate flight dynamics',
-    journal: '6th International Conference on Astrodynamics Tools and Techniques (ICATT)',
-  },
-  {
-    authors: 'Cazabonne, B., Maisonobe, L., et al.',
-    year: '2022',
-    title: 'Semi-analytical Orbit Propagation with Orekit\'s DSST',
-    journal: '8th International Conference on Astrodynamics Tools and Techniques (ICATT)',
-  },
-]
-
-const related = [
-  { name: 'Hipparchus',      desc: 'Mathematics library used by Orekit for numerical algorithms.' },
-  { name: 'Rugged',          desc: 'Orekit-based library for sensor-to-ground mapping.' },
-  { name: 'Patrius',         desc: 'CNES flight dynamics library built on top of Orekit.' },
-  { name: 'GMAT',            desc: 'NASA open-source mission analysis tool.' },
-  { name: 'poliastro',       desc: 'Python astrodynamics library.' },
-  { name: 'Astropy',         desc: 'Python astronomy and astrophysics library.' },
-]
-
-const dataSources = [
-  { name: 'Celestrak',             desc: 'Two-line element sets (TLEs) for thousands of satellites.' },
-  { name: 'IERS',                  desc: 'Earth orientation parameters (EOP), leap second tables.' },
-  { name: 'JPL Horizons',          desc: 'Ephemerides for solar system bodies.' },
-  { name: 'Space-Track.org',       desc: 'Official US DoD satellite catalogue.' },
-  { name: 'IGS',                   desc: 'Precise GNSS orbit and clock products.' },
-]
-
-const sponsors = ['CS Group', 'CNES', 'ESA', 'Thales Alenia Space', 'Airbus Defence & Space', 'NRL']
-</script>
-
 <style scoped>
 .page { padding: 56px 24px; }
-.inner { max-width: 960px; margin: 0 auto; }
+.inner { max-width: 860px; margin: 0 auto; }
 
-.hero-section { margin-bottom: 56px; padding-bottom: 40px; border-bottom: 1px solid var(--border); }
-h1 { font-size: 36px; font-weight: 300; color: #fff; margin-bottom: 20px; }
-.lead { font-size: 16px; color: var(--text-secondary); line-height: 1.75; max-width: 640px; }
-
-.section { margin-bottom: 56px; padding-bottom: 40px; border-bottom: 1px solid var(--border); }
-.section.last { border-bottom: none; }
+h1 { font-size: 28px; font-weight: 300; color: #fff; margin-bottom: 20px; }
 h2 { font-size: 22px; font-weight: 400; color: #fff; margin-bottom: 20px; }
-.body-text { font-size: 14px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 20px; }
+h3 { font-size: 17px; font-weight: 500; color: var(--text-primary); margin-bottom: 8px; }
+.sub { font-size: 13px; font-weight: 400; color: var(--text-muted); }
+.body-text { font-size: 15px; color: var(--text-secondary); line-height: 1.8; margin-bottom: 0; }
 
-.pub-list { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
-.pub-item { background: var(--bg-card); padding: 20px 24px; display: flex; flex-direction: column; gap: 6px; transition: background 0.15s; }
-.pub-item:hover { background: var(--bg-card-hover); }
-.pub-meta { display: flex; justify-content: space-between; align-items: center; }
-.pub-authors { font-size: 12px; color: var(--text-muted); }
-.pub-year { font-size: 11px; font-family: monospace; color: var(--accent); }
-.pub-title { font-size: 14px; color: var(--text-primary); text-decoration: none; }
-.pub-title:hover { color: var(--accent); text-decoration: underline; }
-.pub-journal { font-size: 12px; color: var(--text-muted); font-style: italic; }
+.section { margin-bottom: 48px; padding-bottom: 40px; border-bottom: 1px solid var(--border); }
+.section.last { border-bottom: none; }
 
-.related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
-.related-card { background: var(--bg-card); padding: 20px; display: flex; flex-direction: column; gap: 8px; text-decoration: none; transition: background 0.15s; }
-.related-card:hover { background: var(--bg-card-hover); text-decoration: none; }
-.rel-name { font-size: 14px; font-weight: 500; color: var(--text-primary); }
-.rel-desc { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+.resource-block {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 16px 20px;
+  margin-bottom: 10px;
+}
 
-.data-list { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
-.data-item { background: var(--bg-card); padding: 14px 20px; display: flex; justify-content: space-between; align-items: center; text-decoration: none; transition: background 0.15s; }
-.data-item:hover { background: var(--bg-card-hover); text-decoration: none; }
-.data-name { display: block; font-size: 14px; color: var(--text-primary); margin-bottom: 3px; }
-.data-desc { display: block; font-size: 12px; color: var(--text-muted); }
-.data-arrow { color: var(--text-muted); font-size: 14px; }
-
-.sponsors-grid { display: flex; flex-wrap: wrap; gap: 10px; }
-.sponsor-tag { background: var(--bg-card); border: 1px solid var(--border); padding: 8px 16px; border-radius: 4px; font-size: 13px; color: var(--text-secondary); }
+.inline-link { color: var(--accent); text-decoration: none; }
+.inline-link:hover { text-decoration: underline; }
 </style>

@@ -117,10 +117,16 @@ KeplerianPropagator propagator =
         <div>
           <h2>Everything you need, in one place.</h2>
           <div class="accordion">
-            <div v-for="item in resources" :key="item" class="accordion-item">
-              <span>{{ item }}</span>
-              <span class="plus">+</span>
-            </div>
+            <NuxtLink
+              v-for="item in resources" :key="item.title"
+              :to="item.href"
+              :target="item.external ? '_blank' : null"
+              :rel="item.external ? 'noopener' : null"
+              class="accordion-item"
+            >
+              <span>{{ item.title }}</span>
+              <span class="plus">→</span>
+            </NuxtLink>
           </div>
         </div>
         <div>
@@ -168,11 +174,11 @@ const features = [
 ]
 
 const resources = [
-  'Java API (Javadoc)',
-  'Technical documentation',
-  'Tutorials',
-  'Python wrapper',
-  'Scientific publications',
+  { title: 'Java API (Javadoc)',        href: '/doc-javadoc' },
+  { title: 'Technical documentation',   href: '/doc-maven' },
+  { title: 'Tutorials',                 href: '/tutorials' },
+  { title: 'Python wrapper',            href: 'https://gitlab.orekit.org/orekit-labs/python-wrapper/-/wikis/home', external: true },
+  { title: 'Scientific publications',   href: '/publications' },
 ]
 
 const govLinks = [
