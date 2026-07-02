@@ -51,8 +51,17 @@ Only `GET` methods are allowed.
 **Status : Pending**
 
 CSP is a frontend concern, configured at the Nuxt 3 layer.\
-CesiumJS requires specific directives (`worker-src`, blob URLs, `wasm-unsafe-eval`) that must be set in the frontend build configuration.\
-This item is tracked in the frontend deliverable.
+CesiumJS complicates a standard policy : it spins up web workers from `blob:` URLs, loads WebAssembly for its decoders, and injects `<script>` tags at runtime, all things a strict CSP normally blocks.\
+No CSP header is currently set in `apps/web/nuxt.config.ts`, the `nitro.routeRules` block only defines the `/api/**` proxy rule.
+
+| Directive | Value | Why |
+|---|---|---|
+| `worker-src` | `'self' blob:` | Cesium's terrain/imagery workers are created from `blob:` URLs |
+| `script-src` | `'self' 'wasm-unsafe-eval'` | Needed to instantiate Cesium's WASM decoders |
+| `img-src` | `'self' data: https://server.arcgisonline.com` | Allows the ArcGIS imagery tiles used as the base layer |
+| `connect-src` | `'self' https://server.arcgisonline.com` | Allows fetches to the tile server and the proxied `/api` routes |
+
+To implement, add a `headers` entry to the `/**` route rule in `apps/web/nuxt.config.ts`, next to the existing `/api/**` proxy rule.
 
 
 ## S-7 — SQL injection
