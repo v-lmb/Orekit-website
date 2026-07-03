@@ -25,6 +25,9 @@ Deliver the security requirements (S-3, S-9, S-14), complete the handover docume
 | README.md architecture + DB diagram | Virginie | Must | Done |
 | `docs/sprints/` sprint 1 to 4 documented | Virginie | Must | Done |
 | `docs/stage_3.md` corrections (class names, table names, GitLab -> GitHub) | Virginie | Should | Done|
+| Remaining v1 static pages : tutorials, technical documentation, scientific publications | Allix | Must | Done |
+| Documentation hub nav rewrite (full nav structure, tutorials + Python wrapper links) | Allix | Must | Done |
+| Navbar GitHub button, content/readability polish pass across pages | Allix | Should | Done |
 | S-6 CSP header in `docs/security.md` | Allix | Should | In Progress |
 
 **Dependencies identified:**
@@ -46,6 +49,7 @@ Deliver the security requirements (S-3, S-9, S-14), complete the handover docume
 | 30/06 | README.md written architecture diagram + DB schema |
 | 30/06 | Sprint docs 1-4 written and commited |
 | 01/07 | `docs/stage_3.md` corrected : class names, table name (`tle_record` -> `tle`), column (`norad_id` -> `satellite_id`), GitLab -> GitHub, CI table updated |
+| 30/06 | Allix delivers tutorials, technical documentation and scientific publications pages, rewrites the documentation hub nav, adds a GitHub button to the navbar, and runs a content/readability polish pass across several pages (license, resources, support) |
 
 
 ---
@@ -62,6 +66,8 @@ Deliver the security requirements (S-3, S-9, S-14), complete the handover docume
 - README.md: ASCII architecture diagram, DB schema, stack table, local dev guide, API endpoints, testing section
 - Sprint docs 1-4 written and committed
 - `docs/stage_3.md` corrected 01/07 : class names, table name, column name, GitLab -> GitHub
+- Tutorials, technical documentation and scientific publications pages : all v1 static pages now delivered
+- Documentation hub nav rewrite, navbar GitHub button, content/readability polish pass across several pages
 
 
 **Not completed (carried over):**
@@ -91,8 +97,8 @@ Deliver the security requirements (S-3, S-9, S-14), complete the handover docume
 
 | Metric | Value |
 |---|---|
-| Tasks planned | 12 |
-| Tasks completed | 11 |
+| Tasks planned | 15 |
+| Tasks completed | 14 |
 | Tasks carried over | 1 |
 | Bugs found | 0 |
 | Bugs resolved | 0 |

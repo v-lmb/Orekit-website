@@ -26,6 +26,8 @@ In parallel, Allix starts the CesiumJS 3D globe component.
 | CI - `test` job (pytest + testcontainers) | Virginie | Must | Done |
 | `GlobeEmbed.vue` CesiumJS 3D globe component | Allix | Must | Done |
 | Fix frontend CI - Node 22 | Allix | Must | Done |
+| Static pages : license, resources, news listing, Javadoc reference | Allix | Must | Done |
+| Orekit logo asset | Allix | Should | Done |
 | `docs/api.md` endpoint documentation | Virginie | Should | Done |
 
 **Dependencies identified:**
@@ -42,6 +44,7 @@ In parallel, Allix starts the CesiumJS 3D globe component.
 | 03/06 | Ingestion tested locally `stations` + `active` groups ingested. Docker port regression introduced (5433 instead of 5432 inside network) |
 | 10/06 | CI test job failing `database.py` imports `DATABASE_URL` at module load time before testcontainers sets the env var. Fix: add `DATABASE_URL: postgresql://dummy` in the CI job |
 | 12/06 | 9/9 tests passing locally and in CI. APScheduler confirmed running every 6h |
+| 10/06 | Allix delivers license, resources, news listing and Javadoc reference pages, adds the Orekit logo asset |
 
 ---
 
@@ -55,6 +58,7 @@ In parallel, Allix starts the CesiumJS 3D globe component.
 - 9/9 tests passing with testcontainers (real PostgreSQL spun up per test session)
 - GitHub Actions `test` job green
 - `GlobeEmbed.vue` rendering the CesiumJS globe 
+- License, resources, news listing and Javadoc reference pages, Orekit logo asset
 - `docs/api.md` with example requests and responses
 
 **Not completed (carried over):**
@@ -88,8 +92,8 @@ ISS (NORAD ID 25544) retrieved with `GET /api/tle/25544`
 
 | Metric | Value |
 |---|---|
-| Tasks planned | 9 |
-| Tasks completed | 9 |
+| Tasks planned | 11 |
+| Tasks completed | 11 |
 | Tasks carried over | 0 |
 | Bugs found | 3 |
 | Bugs resolved | 3 |
