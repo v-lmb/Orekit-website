@@ -1,4 +1,5 @@
 from models import Tle
+from datetime import datetime, timezone
 
 
 def test_health(client):
@@ -71,3 +72,30 @@ def test_get_tle_not_found(client):
     """
     response = client.get("/api/tle/INCONNU")
     assert response.status_code == 404
+
+
+def test_get_tle_returns_most_recent(client, db):
+    """
+    Insert the smane satellite in 2 groups with differents ingestion dates,
+    and verify that /api/tle/25544 returnr the most recently ingested TLE
+    """
+    db.add(Tle(
+        satellite_id="25544",
+        name="ISS",
+        line1="1 old",
+        line2="2 old",
+        source_group="stations",
+        ingested_at=datetime(2026, 1, 1, tzinfo=timezone.utc)
+    ))
+    db.add(Tle(
+        satellite_id="25544",
+        name="ISS",
+        line1="1 new",
+        line2="2 new",
+        source_group="active",
+        ingested_at=datetime(2026, 6, 1, tzinfo=timezone.utc)
+    ))
+    db.flush()
+    response = client.get("/api/tle/25544")
+    assert response.status_code == 200
+    assert response.json()["line1"] == "1 new"
