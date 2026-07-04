@@ -9,7 +9,7 @@
 ## 1.Prerequisites
 - Docker >= 24 and Docker Compose >= 2.20
 - (optional for Alembic commands outside of Docker) Python 3.11+
-- Access to project's GitHub Container Registry (`ghcr.io/org/orekit-website`)
+- Access to project's GitHub Container Registry (`ghcr.io/v-lmb/orekit-website`)
 - Git configured with read permissions for the repository
 
 ## 2.Environment variables
@@ -29,7 +29,7 @@ cp .env.example .env
 | `TLE_GROUPS` | Celestrak groups to ingest, separated by commas | `stations,active` |
 | `TLE_FETCH_TIMEOUT_SECONDS` | Timeout per Celestrak request | `30` |
 | `TLE_MAX_RETRIES` | Maximum number of retry attempts on failure | `3` |
-| `CI_REGISTRY_IMAGE` | Path to the Docker image in the registry (CI only) | `ghcr.io/org/orekit-website` |
+| `CI_REGISTRY_IMAGE` | Path to the Docker image in the registry (CI only) | `ghcr.io/v-lmb/orekit-website` |
 
 ## 3.Local startup (Docker Compose)
 Run all commands from the project root unless stated otherwise.
