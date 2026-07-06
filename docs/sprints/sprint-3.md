@@ -35,6 +35,8 @@ Complete all backend documentation, fix CI reliability issues, audit the backend
 | Satellite.js Rollup build fixes (wasm build exclusion, version pin) | Allix | Must | Done |
 | Shared data files versions, governance members | Allix | Should | Done |
 | Content enrichment : real news, Maven/Gradle snippets, governance rewrite, overview rewrite | Allix | Should | Done |
+| Community dropdown (sub-links from orekit.org), PMC section, single-line orgs bar | Allix | Should | Done |
+| Support page fix (commercial section alignment), version ticker update (13.1.6) | Allix | Could | Done |
 | Frontend Dockerfile | Allix | Must | Done |
 
 **Dependencies identified:**
@@ -54,7 +56,7 @@ Complete all backend documentation, fix CI reliability issues, audit the backend
 | 23/06 | OpenAPI spec archived to `docs/openapi.json` with `curl http://localhost:8000/openapi.json` |
 | 24/06 | Integrates CesiumJS + satellite.js in nuxt.config.ts, adds cesium-prototype page, fixes DATABASE_URL port in docker-compose |
 | 25/06 | Delivers `GlobeEmbed.vue` with live TLE feed from the API |
-| 26/06 | Fixes satellite.js Rollup build errors (wasm-build paths, version pin to 6.0.1), adds shared data files, rewrites overview and governance with real content, adds frontend Dockerfile |
+| 26/06 | Fixes satellite.js Rollup build errors (wasm-build paths, version pin to 6.0.1), adds shared data files, rewrites overview and governance with real content, adds Community dropdown and PMC section, fixes support page alignment, updates version ticker, adds frontend Dockerfile |
 | 26/06 | Docker image rebuilt, load test rerun: 5.0 RPS, p95=10ms, 0 failures (valid baseline) |
 | 26/06 | `ingested_at` semantics documented in `docs/data-model.md` |
 
@@ -79,6 +81,7 @@ Complete all backend documentation, fix CI reliability issues, audit the backend
 - Satellite.js Rollup build fixed, wasm-build paths excluded, version pinned to 6.0.1
 - Shared data files for versions and governance members 
 - Pages enriched with real content: news entries, Maven/Gradle snippets, governance with CLAs, overview rewrite
+- Community dropdown with sub-links, PMC section, single-line orgs bar, support page alignment fix, version ticker update
 - Frontend Dockerfile
 
 **Not completed (carried over):**
@@ -111,8 +114,8 @@ Complete all backend documentation, fix CI reliability issues, audit the backend
 
 | Metric | Value |
 |---|---|
-| Tasks planned | 22 |
-| Tasks completed | 22 |
+| Tasks planned | 24 |
+| Tasks completed | 24 |
 | Tasks carried over | 0 |
 | Bugs found | 4 |
 | Bugs resolved | 4 |
