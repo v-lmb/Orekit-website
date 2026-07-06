@@ -18,12 +18,61 @@ jobs:
       - run: pip install ruff
       - run: ruff check apps/api/
 
-  build:
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - run: docker pull postgres:15
+
+      - run: pip install -r apps/api/requirements.txt
+
+      - run: python -m pytest tests/ -v
+        working-directory: apps/api
+        env:
+          DATABASE_URL: postgresql://dummy
+
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: docker/login-action@v3
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
       - uses: docker/build-push-action@v5
         with:
           context: apps/api
-          push: false
+          push: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+          tags: ghcr.io/v-lmb/orekit-website-api:latest
+
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - run: npm ci
+        working-directory: apps/web
+
+      - run: npm run generate
+        working-directory: apps/web
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: frontend-dist
+          path: apps/web/.output/public
