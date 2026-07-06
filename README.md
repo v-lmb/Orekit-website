@@ -239,13 +239,4 @@ GitHub Actions runs three jobs on every push :
 **Maintainer :**\
 Vincent CUCCHIETTI and Orekit's community
 
----
-
-## Acknowledgements
-
-Special thanks to **Vincent CUCCHIETTI**, maintainer of the Orekit project, for his availability, technical guidance, and trust in letting us redesign the official website.
-
-Thanks to the **Orekit community** for building and maintaining an exceptional open source astrodynamics library that made this project meaningful.
-
-Thanks to the **Holberton School team**, staff and peers, for their support and feedback throughout the project.
 
