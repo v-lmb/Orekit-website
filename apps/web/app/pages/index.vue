@@ -33,9 +33,13 @@
       </div>
     </section>
 
-    <!-- Live satellite globe -->
+    <!-- Live satellite globe. ClientOnly keeps Cesium out of the server-side build. Cesium uses
+         `window` as soon as it loads, which would crash Nuxt's static build (that runs in Node,
+         where there is no window). -->
     <section class="globe-section">
-      <GlobeEmbed />
+      <ClientOnly>
+        <GlobeEmbed />
+      </ClientOnly>
     </section>
 
     <!-- In production at -->
@@ -53,29 +57,16 @@
           <h2>Java by design.<br>Python by choice.</h2>
           <p>Write performance-critical code in Java for production, then iterate rapidly in Python
           for analysis. Orekit bridges both worlds through a maintained Java-to-Python interface.</p>
-          <p>Thanks to JPype, every Java class is directly accessible from Python —
+          <p>Thanks to JPype, every Java class is directly accessible from Python, with
           no reimplementation, no divergence.</p>
         </div>
         <div class="code-right">
           <div class="editor">
             <div class="editor-tabs">
-              <button class="tab active">Java</button>
-              <button class="tab">Python</button>
+              <button class="tab" :class="{ active: codeLang === 'java' }" @click="codeLang = 'java'">Java</button>
+              <button class="tab" :class="{ active: codeLang === 'python' }" @click="codeLang = 'python'">Python</button>
             </div>
-            <pre class="code-block"><code>AbsoluteDate date = new AbsoluteDate(
-    2024, 1, 15, 12, 0, 0.0,
-    TimeScalesFactory.getUTC());
-
-Frame eme2000 = FramesFactory.getEME2000();
-double mu = Constants.EIGEN5C_EARTH_MU;
-
-KeplerianOrbit orbit = new KeplerianOrbit(
-    7200e3, 0.001, FastMath.toRadians(98.5),
-    0.0, 0.0, 0.0,
-    PositionAngleType.MEAN, eme2000, date, mu);
-
-KeplerianPropagator propagator =
-    new KeplerianPropagator(orbit);</code></pre>
+            <pre class="code-block"><code>{{ codeSnippets[codeLang] }}</code></pre>
           </div>
         </div>
       </div>
@@ -143,12 +134,54 @@ KeplerianPropagator propagator =
       </div>
     </section>
 
+    <!-- Sponsors -->
+    <section id="sponsors" class="users-section">
+      <p class="section-label">SPONSORED BY</p>
+      <div class="users-list">
+        <a v-for="sponsor in sponsors" :key="sponsor.name" :href="sponsor.href" target="_blank" rel="noopener" class="org">{{ sponsor.name }}</a>
+      </div>
+    </section>
+
   </div>
 </template>
 
 <script setup>
 import { LATEST } from '~/data/versions'
 import { pmc } from '~/data/governance'
+import { sponsors } from '~/data/sponsors'
+
+// Java / Python editor: the same Keplerian-propagator example in both languages,
+// toggled by the tabs above the code block.
+const codeLang = ref('java')
+const codeSnippets = {
+  java: `AbsoluteDate date = new AbsoluteDate(
+    2024, 1, 15, 12, 0, 0.0,
+    TimeScalesFactory.getUTC());
+
+Frame eme2000 = FramesFactory.getEME2000();
+double mu = Constants.EIGEN5C_EARTH_MU;
+
+KeplerianOrbit orbit = new KeplerianOrbit(
+    7200e3, 0.001, FastMath.toRadians(98.5),
+    0.0, 0.0, 0.0,
+    PositionAngleType.MEAN, eme2000, date, mu);
+
+KeplerianPropagator propagator =
+    new KeplerianPropagator(orbit);`,
+  python: `date = AbsoluteDate(
+    2024, 1, 15, 12, 0, 0.0,
+    TimeScalesFactory.getUTC())
+
+eme2000 = FramesFactory.getEME2000()
+mu = Constants.EIGEN5C_EARTH_MU
+
+orbit = KeplerianOrbit(
+    7200e3, 0.001, radians(98.5),
+    0.0, 0.0, 0.0,
+    PositionAngleType.MEAN, eme2000, date, mu)
+
+propagator = KeplerianPropagator(orbit)`,
+}
 
 const orgs = [
   { name: 'CS Group',              href: 'https://www.csgroup.eu' },
@@ -167,16 +200,16 @@ const features = [
   { title: 'Propagators',          desc: 'Keplerian, DSST, SGP4/SDP4, TLE-based, numerical with adaptive step integrators.' },
   { title: 'Force models',         desc: 'Gravity fields, atmospheric drag, solar radiation pressure, third-body attractions.' },
   { title: 'Attitude',             desc: 'Nadir pointing, sun pointing, spin-stabilised, attitude sequences and slews.' },
-  { title: 'Time & dates',         desc: 'UTC, TAI, GPS, TDB, TT — all conversions, leap seconds, IERS conventions.' },
+  { title: 'Time & dates',         desc: 'UTC, TAI, GPS, TDB, TT: all conversions, leap seconds, IERS conventions.' },
   { title: 'Orbit determination',  desc: 'Batch least squares and Kalman filter, ground station measurements.' },
   { title: 'Maneuvers',            desc: 'Impulsive and continuous burns, scheduling, delta-V computation.' },
-  { title: 'Events',               desc: 'Eclipse, station visibility, apoapsis, node crossing — any custom detector.' },
+  { title: 'Events',               desc: 'Eclipse, station visibility, apoapsis, node crossing, any custom detector.' },
 ]
 
 const resources = [
   { title: 'Java API (Javadoc)',        href: '/doc-javadoc' },
   { title: 'Technical documentation',   href: '/doc-maven' },
-  { title: 'Tutorials',                 href: '/tutorials' },
+  { title: 'Tutorials',                 href: '/doc-tutorials' },
   { title: 'Python wrapper',            href: 'https://gitlab.orekit.org/orekit-labs/python-wrapper/-/wikis/home', external: true },
   { title: 'Scientific publications',   href: '/publications' },
 ]
@@ -345,9 +378,9 @@ const govLinks = [
   align-items: center;
 }
 .code-left h2 {
-  font-size: 30px;
+  font-size: 26px;
   font-weight: 300;
-  line-height: 1.25;
+  line-height: 1.3;
   color: #fff;
   margin-bottom: 20px;
 }
@@ -400,7 +433,7 @@ const govLinks = [
   font-weight: 300;
   color: #fff;
   margin-bottom: 40px;
-  line-height: 1.35;
+  line-height: 1.3;
 }
 .features-grid {
   display: grid;
@@ -461,8 +494,9 @@ const govLinks = [
   gap: 64px;
 }
 .bottom-grid h2 {
-  font-size: 22px;
+  font-size: 26px;
   font-weight: 300;
+  line-height: 1.3;
   color: #fff;
   margin-bottom: 24px;
 }
