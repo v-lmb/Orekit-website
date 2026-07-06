@@ -156,7 +156,7 @@ deliver the security requirements (S-3, S-9, S-14), complete the handover docume
 | Remaining v1 static pages : tutorials, technical documentation, scientific publications | Allix | Must | Done |
 | Documentation hub nav rewrite (full nav structure, tutorials + Python wrapper links) | Allix | Must | Done |
 | Navbar GitHub button, content/readability polish pass across pages | Allix | Should | Done |
-| S-6 CSP header in `docs/security.md` | Allix | Should | In Progress |
+| S-6 Content Security Policy at the Nuxt layer | Allix | Should | Done |
 
 Dependencies identified:\
 README depends on architecture and data model being finalized (done); sprint docs required before requesting the Holberton MR.
@@ -220,7 +220,7 @@ Key metrics tracked per sprint:
 | 1 | 7 | 7 | 1 | - |
 | 2 | 11 | 11 | 3 | 9/9 |
 | 3 | 24 | 24 | 4 | 9/9 |
-| 4 | 15 | 14 | 0 | 9/9 |
+| 4 | 15 | 15 | 0 | 9/9 |
 
 Deviations handled:\
 Docker Hub rate limit in CI (sprint 3), stale Docker image invalidating load test results (sprint 3), satellite.js Rollup build errors (sprint 3).
@@ -374,8 +374,8 @@ Load test dashboard shown with 0 failures at 5 RPS.
 - Tutorials, technical documentation and scientific publications pages: all v1 static pages now delivered
 - Documentation hub nav rewrite, navbar GitHub button, content/readability polish pass across several pages
 
-**Not completed (carried over):**
-- S-6 (CSP) in `docs/security.md`, Allix responsible, pending frontend completion
+**Completed in the finalization pass (just after the sprint):**
+- S-6 (CSP): meta-tag Content Security Policy in `apps/web/nuxt.config.ts`, allowlisting the ArcGIS tiles and Cesium's wasm/worker needs
 
 **Demo notes:**\
 rate limiting tested live:\
@@ -388,7 +388,7 @@ first 60 return 200, 61st returns 429
 - A-7 sign off process: quick async validation with maintainer avoided a late architectural change
 
 **What didn't go well:**
-- S-6 (Content Security Policy) remains pending, depends on Allix completing the frontend CSP configuration
+- S-6 (CSP) slipped past the sprint: it depended on the frontend Cesium integration being finished, so it landed in the finalization pass rather than within the sprint window
 
 **Improvements for next sprint (handover phase):**
 - `dev` now has full-stack integration, schedule a joint demo session to show frontend + backend end-to-end
@@ -396,8 +396,8 @@ first 60 return 200, 61st returns 429
 | Metric | Value |
 |---|---|
 | Tasks planned | 15 |
-| Tasks completed | 14 |
-| Tasks carried over | 1 |
+| Tasks completed | 15 |
+| Tasks carried over | 0 |
 | Bugs found | 0 |
 | Bugs resolved | 0 |
 
