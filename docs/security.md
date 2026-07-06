@@ -2,7 +2,7 @@
 
 Scope :\
 backend (`apps/api/`) and CI pipeline.
-The frontend (S-6, S-14) will be completed during the integration of the Nuxt 3 frontend.\
+The frontend Content Security Policy (S-6) is set at the Nuxt 3 layer.\
 TLS, HSTS, backups and uptime monitoring are handled by the maintainer, outside the scope of this student project.
 
 ## S-1 Database exposure
@@ -48,20 +48,26 @@ Only `GET` methods are allowed.
 
 
 ## S-6 — Content Security Policy
-**Status : Pending**
+**Status : Done**
 
-CSP is a frontend concern, configured at the Nuxt 3 layer.\
-CesiumJS complicates a standard policy : it spins up web workers from `blob:` URLs, loads WebAssembly for its decoders, and injects `<script>` tags at runtime, all things a strict CSP normally blocks.\
-No CSP header is currently set in `apps/web/nuxt.config.ts`, the `nitro.routeRules` block only defines the `/api/**` proxy rule.
+The policy is delivered as a `<meta http-equiv="Content-Security-Policy">` tag baked into every
+generated page rather than a response header : the frontend ships as a static build
+(`nitro.preset=static`), where `routeRules` headers only exist on the dev server and never reach
+production.\
+It is set on the production build only (`$production` key in `nuxt.config.ts`) to avoid blocking
+Vite's hot reload in development.\
+Most relaxations below are required by CesiumJS (the 3D globe) :
 
 | Directive | Value | Why |
 |---|---|---|
-| `worker-src` | `'self' blob:` | Cesium's terrain/imagery workers are created from `blob:` URLs |
-| `script-src` | `'self' 'wasm-unsafe-eval'` | Needed to instantiate Cesium's WASM decoders |
-| `img-src` | `'self' data: https://server.arcgisonline.com` | Allows the ArcGIS imagery tiles used as the base layer |
-| `connect-src` | `'self' https://server.arcgisonline.com` | Allows fetches to the tile server and the proxied `/api` routes |
+| `default-src` | `'self'` | Same-origin baseline for anything not listed below |
+| `script-src` | `'self' 'unsafe-inline' 'unsafe-eval'` | Nuxt's inline hydration script ; Cesium builds shaders with `new Function()` and compiles WebAssembly |
+| `worker-src` | `'self' blob:` | Cesium creates its terrain/imagery workers from `blob:` URLs |
+| `img-src` | `'self' data: https://server.arcgisonline.com` | Canvas textures (`data:`) and the ArcGIS basemap tiles |
+| `connect-src` | `'self' https://server.arcgisonline.com` | Tile requests to ArcGIS ; `'self'` covers the same-origin `/api` calls |
+| `style-src` | `'self' 'unsafe-inline'` | Cesium widget styles and Vue's injected component CSS |
 
-To implement, add a `headers` entry to the `/**` route rule in `apps/web/nuxt.config.ts`, next to the existing `/api/**` proxy rule.
+> Implementation : `apps/web/nuxt.config.ts`, `$production.app.head`
 
 
 ## S-7 — SQL injection
