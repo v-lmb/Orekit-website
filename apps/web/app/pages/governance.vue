@@ -26,7 +26,7 @@
         <h2>1 Introduction</h2>
         <p class="body-text">OREKIT is a free low level space dynamics library written in Java. It provides basic elements (orbits, dates, attitude, frames…) and various algorithms to handle them (conversions, analytical and numerical propagation, pointing…).</p>
         <p class="body-text">OREKIT is developed under APACHE V2.0 license. All contributions to OREKIT have to be compliant with the terms and conditions of this license. This license belongs to the "Business Friendly" category. It allows use, modification and redistribution. It does not impose further obligation to derived products.</p>
-        <p class="body-text">The following document describes the governance model under which OREKIT is run. It has been established on the meritocratic governance model proposed by OSS Watch, under Creative Commons License: Attribution Share Alike.</p>
+        <p class="body-text">The following document describes the governance model under which OREKIT is run. It has been established on the meritocratic governance model proposed by OSS Watch, under Creative Commons License: <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener" class="inline-link">Attribution Share Alike</a>.</p>
         <p class="body-text">Read more: <a href="http://oss-watch.ac.uk/resources/meritocraticgovernancemodel" target="_blank" rel="noopener" class="inline-link">http://oss-watch.ac.uk/resources/meritocraticgovernancemodel</a></p>
       </section>
 
