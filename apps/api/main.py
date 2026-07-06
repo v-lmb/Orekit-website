@@ -93,7 +93,7 @@ def list_tle(request: Request, group: str = None, limit: int = 100, offset: int 
 @limiter.limit("60/minute")
 def get_tle(request: Request, satellite_id: str, db: Session = Depends(get_db)):
     """Returns a single TLE by satellite ID, or 404 if not found"""
-    tle = db.query(Tle).filter(Tle.satellite_id == satellite_id).first()
+    tle = db.query(Tle).filter(Tle.satellite_id == satellite_id).order_by(Tle.ingested_at.desc()).first()
     if tle is None:
         raise HTTPException(status_code=404, detail="Satellite not found")
     return tle
