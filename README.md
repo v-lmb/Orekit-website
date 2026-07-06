@@ -23,13 +23,23 @@ Orekit-website/
 │   │   ├── database.py         # DB session factory
 │   │   ├── ingest.py           # Celestrak TLE ingestion
 │   │   ├── alembic/            # Database migrations
-│   │   └── tests/              # pytest + testcontainers + locust
+│   │   ├── tests/              # pytest + testcontainers + locust
+│   │   ├── Dockerfile          # Non-root production image
+│   │   └── requirements.txt
 │   └── web/                    # Nuxt 3 frontend
-│       ├── app/                # App shell + components
-│       └── pages/              # Vue pages (one file per route)
+│       ├── app/
+│       │   ├── app.vue         # App shell
+│       │   ├── components/     # Nav, footer, news ticker, Cesium globe
+│       │   ├── layouts/        # Default layout
+│       │   ├── pages/          # Vue pages (one file per route)
+│       │   ├── data/           # Governance, sponsors, versions data
+│       │   └── error.vue       # 404 page
+│       ├── public/             # Static assets (logo, favicon, robots.txt)
+│       ├── scripts/            # Cesium assets copy script
+│       └── nuxt.config.ts
 │
 ├── compose/
-│   └── docker-compose.yml
+│   └── docker-compose.yml      # PostgreSQL 15 + API + frontend (local dev)
 │
 ├── docs/
 │   ├── api.md                  # API reference
@@ -38,7 +48,11 @@ Orekit-website/
 │   ├── security.md             # Security checklist
 │   ├── openapi.json            # Archived OpenAPI spec
 │   ├── load-test.md            # Load test results
+│   ├── stage_1.md … stage_4.md # Holberton stage reports
 │   └── sprints/                # Sprint plans, reviews, retrospectives
+│
+├── .github/
+│   └── workflows/ci.yml        # lint, test, build, frontend
 │
 ├── .env.example
 └── README.md
@@ -198,7 +212,7 @@ source venv/bin/activate
 python -m pytest tests/ -v
 ```
 
-9/9 tests passing and CI runs the full suite on every push to `dev`
+10/10 tests passing and CI runs the full suite on every push to `dev`
 
 ### Load testing
 
@@ -214,11 +228,12 @@ Reference baseline :\
 
 ## CI Pipeline
 
-GitHub Actions runs three jobs on every push :
+GitHub Actions runs four jobs on every push :
 
 1. **lint** : ruff (Python)
 2. **test** : pytest + testcontainers (real PostgreSQL)
-3. **build** : Docker image pushed to ghcr.io
+3. **build** : Docker image build ; pushed to ghcr.io on merge to `main` only
+4. **frontend** : Nuxt static build, published as a CI artifact
 
 ---
 
