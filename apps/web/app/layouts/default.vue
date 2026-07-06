@@ -24,7 +24,7 @@
   --bg-card-hover: #1c1c28;
   --text-primary: #e2e2ee;
   --text-secondary: #8888aa;
-  --text-muted: #4a4a60;
+  --text-muted: #767690;
   --accent: #6BD8FF;
   --border: #23232f;
   --border-light: #2e2e3e;

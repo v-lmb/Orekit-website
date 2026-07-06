@@ -2,7 +2,7 @@
 
 Scope :\
 backend (`apps/api/`) and CI pipeline.
-The frontend (S-6, S-14) will be completed during the integration of the Nuxt 3 frontend.\
+The frontend Content Security Policy (S-6) is set at the Nuxt 3 layer.\
 TLS, HSTS, backups and uptime monitoring are handled by the maintainer, outside the scope of this student project.
 
 ## S-1 Database exposure
@@ -48,11 +48,26 @@ Only `GET` methods are allowed.
 
 
 ## S-6 — Content Security Policy
-**Status : Pending**
+**Status : Done**
 
-CSP is a frontend concern, configured at the Nuxt 3 layer.\
-CesiumJS requires specific directives (`worker-src`, blob URLs, `wasm-unsafe-eval`) that must be set in the frontend build configuration.\
-This item is tracked in the frontend deliverable.
+The policy is delivered as a `<meta http-equiv="Content-Security-Policy">` tag baked into every
+generated page rather than a response header : the frontend ships as a static build
+(`nitro.preset=static`), where `routeRules` headers only exist on the dev server and never reach
+production.\
+It is set on the production build only (`$production` key in `nuxt.config.ts`) to avoid blocking
+Vite's hot reload in development.\
+Most relaxations below are required by CesiumJS (the 3D globe) :
+
+| Directive | Value | Why |
+|---|---|---|
+| `default-src` | `'self'` | Same-origin baseline for anything not listed below |
+| `script-src` | `'self' 'unsafe-inline' 'unsafe-eval'` | Nuxt's inline hydration script ; Cesium builds shaders with `new Function()` and compiles WebAssembly |
+| `worker-src` | `'self' blob:` | Cesium creates its terrain/imagery workers from `blob:` URLs |
+| `img-src` | `'self' data: https://server.arcgisonline.com` | Canvas textures (`data:`) and the ArcGIS basemap tiles |
+| `connect-src` | `'self' https://server.arcgisonline.com` | Tile requests to ArcGIS ; `'self'` covers the same-origin `/api` calls |
+| `style-src` | `'self' 'unsafe-inline'` | Cesium widget styles and Vue's injected component CSS |
+
+> Implementation : `apps/web/nuxt.config.ts`, `$production.app.head`
 
 
 ## S-7 — SQL injection

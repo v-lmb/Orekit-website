@@ -6,11 +6,15 @@
         <NuxtLink to="/governance">GOVERNANCE</NuxtLink>
         <NuxtLink to="/license">LICENSE</NuxtLink>
         <NuxtLink to="/resources">RESOURCES</NuxtLink>
-        <NuxtLink to="/resources#sponsors">SPONSORS</NuxtLink>
+        <a :href="sponsors[0]?.href" target="_blank" rel="noopener">SPONSORS</a>
       </nav>
     </div>
   </footer>
 </template>
+
+<script setup>
+import { sponsors } from '~/data/sponsors'
+</script>
 
 <style scoped>
 .footer {

@@ -28,7 +28,7 @@ Deliver the security requirements (S-3, S-9, S-14), complete the handover docume
 | Remaining v1 static pages : tutorials, technical documentation, scientific publications | Allix | Must | Done |
 | Documentation hub nav rewrite (full nav structure, tutorials + Python wrapper links) | Allix | Must | Done |
 | Navbar GitHub button, content/readability polish pass across pages | Allix | Should | Done |
-| S-6 CSP header in `docs/security.md` | Allix | Should | In Progress |
+| S-6 Content Security Policy at the Nuxt layer | Allix | Should | Done |
 
 **Dependencies identified:**
 - README depends on architecture and data model being finalized (done)
@@ -70,8 +70,8 @@ Deliver the security requirements (S-3, S-9, S-14), complete the handover docume
 - Documentation hub nav rewrite, navbar GitHub button, content/readability polish pass across several pages
 
 
-**Not completed (carried over):**
-- S-6 (CSP) in `docs/security.md`, Allix responsible, pending frontend completion
+**Completed in the finalization pass (just after the sprint):**
+- S-6 (CSP): meta-tag Content Security Policy in `apps/web/nuxt.config.ts`, allowlisting the ArcGIS tiles and Cesium's wasm/worker needs
 
 **Demo notes:**
 > Rate limiting tested live: `for i in $(seq 1 61); do curl -s -o /dev/null -w "%{http_code}\n" http://localhost:8000/api/tle; done` first 60 return 200, 61st returns 429.
@@ -86,7 +86,7 @@ Deliver the security requirements (S-3, S-9, S-14), complete the handover docume
 - A-7 sign off process: quick async validation with maintener avoided a late architectural change
 
 **What didn't go well:**
-- S-6 (Content Security Policy) remains pending depends on Allix completing the frontend CSP configuration
+- S-6 (CSP) slipped past the sprint: it depended on the frontend Cesium integration being finished, so it landed in the finalization pass rather than within the sprint window
 
 **Improvements for next sprint (handover phase):**
 - `dev` now has full-stack integration schedule a joint demo session to show frontend + backend end-to-end
@@ -98,7 +98,7 @@ Deliver the security requirements (S-3, S-9, S-14), complete the handover docume
 | Metric | Value |
 |---|---|
 | Tasks planned | 15 |
-| Tasks completed | 14 |
-| Tasks carried over | 1 |
+| Tasks completed | 15 |
+| Tasks carried over | 0 |
 | Bugs found | 0 |
 | Bugs resolved | 0 |

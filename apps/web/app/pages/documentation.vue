@@ -24,7 +24,7 @@
             <p>Architecture descriptions of the main packages and Maven site for every release.</p>
             <span class="card-cta">Browse all versions →</span>
           </NuxtLink>
-          <NuxtLink to="/tutorials" class="doc-card">
+          <NuxtLink to="/doc-tutorials" class="doc-card">
             <span class="card-label">Step by step</span>
             <h2>Tutorials</h2>
             <p>Tutorials provided with source code and comments to emphazise particular use cases.</p>

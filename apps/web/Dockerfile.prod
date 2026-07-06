@@ -1,0 +1,21 @@
+# ---- build: install deps and produce the static site (nitro.preset=static, no SSR runtime) ----
+FROM node:20-alpine AS build
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+RUN npm run generate
+
+# ---- runtime: minimal, non-root, read-only static file server (S-9) ----
+# Serves the finished static site only. It does not proxy /api on purpose: in the documented setup
+# that job belongs to the maintainer's reverse proxy (out of scope, see docs/stage_3.md), so /api
+# returning 404 here is expected. Use dev mode (docker compose up) to run the whole app with /api.
+FROM node:20-alpine
+WORKDIR /app
+RUN npm install -g serve
+COPY --chown=node:node --from=build /app/.output/public ./public
+# serve writes its cache under $HOME; point it at the tmpfs-backed /tmp so a read-only rootfs works
+ENV HOME=/tmp
+USER node
+EXPOSE 3000
+CMD ["serve", "-l", "3000", "./public"]

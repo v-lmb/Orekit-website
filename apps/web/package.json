@@ -3,8 +3,10 @@
   "type": "module",
   "private": true,
   "scripts": {
+    "prebuild": "node scripts/copy-cesium-assets.mjs",
     "build": "nuxt build",
     "dev": "nuxt dev",
+    "pregenerate": "node scripts/copy-cesium-assets.mjs",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"

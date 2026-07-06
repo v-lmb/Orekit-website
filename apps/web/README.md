@@ -1,75 +1,53 @@
-# Nuxt Minimal Starter
+# Orekit website frontend
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Nuxt frontend for the Orekit site. It's a static site, and its landing page has a CesiumJS
+3D globe that shows satellites from the backend's TLE data and moves them in the browser with
+satellite.js.
 
-## Setup
+See the [root README](../../README.md) for the full stack (backend, database, CI).
 
-Make sure to install dependencies:
+## Running
+
+Full stack (database, backend and frontend together), from the repo root:
 
 ```bash
-# npm
+cd compose && docker compose up --build
+```
+
+Site at http://localhost:3000. The first load runs a one-time Vite step, so reload once if the
+page looks empty.
+
+Frontend on its own:
+
+```bash
 npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
-```
-
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
 npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
 ```
 
-## Production
+Also at http://localhost:3000. The globe's `/api` calls are proxied to the backend
+(`API_BASE_URL`, default `http://localhost:8000`), so the backend has to be running for
+satellites to show.
 
-Build the application for production:
+## Building
 
 ```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
+npm run generate
 ```
 
-Locally preview production build:
+Writes the static site to `.output/public/`. That's what CI builds and ships. Preview it with
+`npm run preview`.
 
-```bash
-# npm
-npm run preview
+The static build serves files only. In production a reverse proxy sends `/api` to the backend,
+so satellites won't show if you serve `.output/public` on its own.
 
-# pnpm
-pnpm preview
+## Structure
 
-# yarn
-yarn preview
-
-# bun
-bun run preview
 ```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+app/components/   components, including GlobeEmbed.vue (the globe)
+app/pages/        one file per route
+app/layouts/      nav, footer, theme
+app/data/         shared content (versions, governance, sponsors)
+app/error.vue     404 page
+scripts/          build helper that copies Cesium's runtime assets
+nuxt.config.ts    /api proxy, Cesium plugin, production CSP (S-6)
+```

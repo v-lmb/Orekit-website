@@ -63,7 +63,6 @@ let viewer = null
 let handler = null
 let _deselect = null
 let _selectEntity = null
-let positionInterval = null
 
 function closePanel() {
   _deselect?.()
@@ -89,32 +88,47 @@ function formatAlt(meters) {
 
 onMounted(async () => {
   try {
-    const Cesium = await import('cesium')
+    // Cesium is a big library and only works in the browser, so we only fetch it
+    // once this component actually loads, instead of slowing down every page.
+    // Called CesiumLib, not Cesium, on purpose. In the production build, vite-plugin-cesium turns
+    // `await import('cesium')` into `Promise.resolve(Cesium)`. If this variable were also called
+    // Cesium, we'd get `const Cesium = await Promise.resolve(Cesium)`, which refers to itself and
+    // crashes the page on load. A different name avoids the clash.
+    const CesiumLib = await import('cesium')
     await import('cesium/Build/Cesium/Widgets/widgets.css')
 
     loading.value = false
 
     const creditContainer = document.createElement('div')
 
-    viewer = new Cesium.Viewer(cesiumContainer.value, {
+    // This stops Cesium from loading its own default map images
+    // before we set up our own map images just below.
+    viewer = new CesiumLib.Viewer(cesiumContainer.value, {
       baseLayer: false,
-      terrainProvider: new Cesium.EllipsoidTerrainProvider(),
+      terrainProvider: new CesiumLib.EllipsoidTerrainProvider(),
       baseLayerPicker: false,
       geocoder: false,
       homeButton: false,
       sceneModePicker: false,
       navigationHelpButton: false,
-      animation: false,
-      timeline: false,
+      animation: true,
+      timeline: true,
       fullscreenButton: false,
       infoBox: false,
       selectionIndicator: false,
       creditContainer,
     })
 
+    viewer.clock.currentTime = CesiumLib.JulianDate.now()
+    viewer.clock.clockRange = CesiumLib.ClockRange.UNBOUNDED
+    viewer.clock.multiplier = 1
+    viewer.clock.shouldAnimate = true
+
+    // We add the map images after creating the globe (not while creating it) so we can
+    // clear out old images first and swap in new ones later without rebuilding the whole globe.
     viewer.scene.imageryLayers.removeAll()
     viewer.scene.imageryLayers.addImageryProvider(
-      new Cesium.UrlTemplateImageryProvider({
+      new CesiumLib.UrlTemplateImageryProvider({
         url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
         format: 'image/jpeg',
         maximumLevel: 19,
@@ -128,7 +142,7 @@ onMounted(async () => {
     viewer.scene.sun.show = true
     viewer.scene.moon.show = true
     viewer.scene.globe.showGroundAtmosphere = true
-    viewer.scene.globe.baseColor = Cesium.Color.fromCssColorString('#0a1628')
+    viewer.scene.globe.baseColor = CesiumLib.Color.fromCssColorString('#0a1628')
     viewer.scene.globe.atmosphereLightIntensity = 10.0
     viewer.scene.globe.atmosphereHueShift = 0.0
     viewer.scene.globe.atmosphereSaturationShift = 0.1
@@ -136,7 +150,7 @@ onMounted(async () => {
     viewer.scene.fog.enabled = true
     viewer.scene.fog.density = 0.0002
     viewer.scene.skyBox.show = true
-    viewer.scene.backgroundColor = Cesium.Color.BLACK
+    viewer.scene.backgroundColor = CesiumLib.Color.BLACK
 
     const baseStyles = new Map()
     let lastHoveredId = null
@@ -145,7 +159,7 @@ onMounted(async () => {
 
     function computeOrbitRing(altitudeMeters, inclinationDeg, satLonRad, satLatRad, numPoints = 180) {
       const positions = []
-      const inc = Cesium.Math.toRadians(inclinationDeg)
+      const inc = CesiumLib.Math.toRadians(inclinationDeg)
       const sinTheta = Math.sin(satLatRad) / Math.sin(inc)
       const theta = Math.asin(Math.max(-1, Math.min(1, sinTheta)))
       const lonUnrotated = Math.atan2(Math.cos(theta), Math.cos(inc) * Math.sin(theta))
@@ -154,7 +168,7 @@ onMounted(async () => {
         const angle = (i / numPoints) * 2 * Math.PI
         const lat = Math.asin(Math.sin(inc) * Math.sin(angle))
         const lon = Math.atan2(Math.cos(angle), Math.cos(inc) * Math.sin(angle)) + lonOffset
-        positions.push(Cesium.Cartesian3.fromRadians(lon, lat, altitudeMeters))
+        positions.push(CesiumLib.Cartesian3.fromRadians(lon, lat, altitudeMeters))
       }
       return positions
     }
@@ -170,23 +184,34 @@ onMounted(async () => {
       const inclination = entity.properties?.inclination?.getValue() ?? 0
       orbitEntity = viewer.entities.add({
         polyline: {
-          positions: computeOrbitRing(altitudeMeters, inclination, carto.longitude, carto.latitude),
+          // This keeps redrawing the orbit line based on where the satellite is right now.
+          // If we used a fixed list of points instead, the line would just stay frozen in place.
+          positions: new CesiumLib.CallbackProperty((time) => {
+            const entity = viewer.entities.getById(selectedEntityId)
+            if (!entity) return []
+            const pos = entity.position?.getValue(time)
+            if (!pos) return []
+            const currentCarto = CesiumLib.Cartographic.fromCartesian(pos)
+            return computeOrbitRing(currentCarto.height, inclination, currentCarto.longitude, currentCarto.latitude)
+          }, false),
           width: 4,
-          material: new Cesium.PolylineGlowMaterialProperty({ glowPower: 0.3, color: Cesium.Color.fromCssColorString('#6BD8FF').withAlpha(0.85) }),
+          material: new CesiumLib.PolylineGlowMaterialProperty({ glowPower: 0.3, color: CesiumLib.Color.fromCssColorString('#6BD8FF').withAlpha(0.85) }),
           clampToGround: false,
         },
       })
     }
 
-    const HOVER_COLOR       = Cesium.Color.WHITE
-    const HOVER_LABEL_COLOR = Cesium.Color.fromCssColorString('#6BD8FF')
+    const HOVER_COLOR       = CesiumLib.Color.WHITE
+    const HOVER_LABEL_COLOR = CesiumLib.Color.fromCssColorString('#6BD8FF')
     const HOVER_FONT        = '15px sans-serif'
-    const SEL_COLOR         = Cesium.Color.fromCssColorString('#6BD8FF')
-    const SEL_LABEL_COLOR   = Cesium.Color.WHITE
+    const SEL_COLOR         = CesiumLib.Color.fromCssColorString('#6BD8FF')
+    const SEL_LABEL_COLOR   = CesiumLib.Color.WHITE
     const SEL_FONT          = '15px sans-serif'
 
     function registerEntity(entity, pixelSize, color) {
-      baseStyles.set(entity.id, { pixelSize, color: color.clone(), labelFont: '13px sans-serif', labelColor: Cesium.Color.WHITE.clone() })
+      // We store each satellite's style under its ID (just a string), not the object itself.
+      // The same kind of ID we already use elsewhere to track which satellite is selected or hovered.
+      baseStyles.set(entity.id, { pixelSize, color: color.clone(), labelFont: '13px sans-serif', labelColor: CesiumLib.Color.WHITE.clone() })
       return entity
     }
     function applyBase(entity) {
@@ -234,8 +259,8 @@ onMounted(async () => {
       applySelected(entity)
       dimAllExcept(entity.id)
       selectedEntityId = entity.id
-      const pos = entity.position.getValue(Cesium.JulianDate.now())
-      const carto = Cesium.Cartographic.fromCartesian(pos)
+      const pos = entity.position.getValue(CesiumLib.JulianDate.now())
+      const carto = CesiumLib.Cartographic.fromCartesian(pos)
       drawOrbit(entity, carto.height, carto)
       selectedEntity.value = {
         name: entity.name,
@@ -254,9 +279,9 @@ onMounted(async () => {
       const carto = applySelection(entity)
       if (fly) {
         viewer.camera.flyTo({
-          destination: Cesium.Cartesian3.fromDegrees(
-            Cesium.Math.toDegrees(carto.longitude),
-            Cesium.Math.toDegrees(carto.latitude),
+          destination: CesiumLib.Cartesian3.fromDegrees(
+            CesiumLib.Math.toDegrees(carto.longitude),
+            CesiumLib.Math.toDegrees(carto.latitude),
             carto.height + 3000000
           ),
           duration: 1.5,
@@ -264,37 +289,29 @@ onMounted(async () => {
       }
     }
 
-    const LABEL_VISIBLE_DISTANCE = new Cesium.DistanceDisplayCondition(0, 8000000)
-    const POINT_SCALE = new Cesium.NearFarScalar(1e3, 1.5, 1e7, 0.8)
-    const ACCENT = Cesium.Color.fromCssColorString('#6BD8FF')
-    const OUTLINE = Cesium.Color.WHITE.withAlpha(0.6)
+    const LABEL_VISIBLE_DISTANCE = new CesiumLib.DistanceDisplayCondition(0, 8000000)
+    const POINT_SCALE = new CesiumLib.NearFarScalar(1e3, 1.5, 1e7, 0.8)
+    const ACCENT = CesiumLib.Color.fromCssColorString('#6BD8FF')
+    const OUTLINE = CesiumLib.Color.WHITE.withAlpha(0.6)
 
-    registerEntity(viewer.entities.add({
-      name: 'Kourou GS',
-      position: Cesium.Cartesian3.fromDegrees(-52.768, 5.236, 0),
-      point: { pixelSize: 13, color: ACCENT.clone(), outlineColor: OUTLINE, outlineWidth: 2, scaleByDistance: POINT_SCALE },
-      label: { text: 'Kourou GS', font: '13px sans-serif', fillColor: Cesium.Color.WHITE, outlineColor: Cesium.Color.BLACK, outlineWidth: 2, style: Cesium.LabelStyle.FILL_AND_OUTLINE, pixelOffset: new Cesium.Cartesian2(0, -22), distanceDisplayCondition: LABEL_VISIBLE_DISTANCE },
-      properties: new Cesium.PropertyBag({ norad_id: 'N/A', type: 'Ground Station' }),
-    }), 13, ACCENT.clone())
-
-    registerEntity(viewer.entities.add({
-      name: 'ESA ESOC',
-      position: Cesium.Cartesian3.fromDegrees(8.651, 49.871, 0),
-      point: { pixelSize: 13, color: ACCENT.clone(), outlineColor: OUTLINE, outlineWidth: 2, scaleByDistance: POINT_SCALE },
-      label: { text: 'ESA ESOC', font: '13px sans-serif', fillColor: Cesium.Color.WHITE, outlineColor: Cesium.Color.BLACK, outlineWidth: 2, style: Cesium.LabelStyle.FILL_AND_OUTLINE, pixelOffset: new Cesium.Cartesian2(0, -22), distanceDisplayCondition: LABEL_VISIBLE_DISTANCE },
-      properties: new Cesium.PropertyBag({ norad_id: 'N/A', type: 'Control Center' }),
-    }), 13, ACCENT.clone())
-
+    // We work out each satellite's position right here in the browser instead of asking the server every time. 
+    // With hundreds of satellites updating many times a second, asking the server that often would be too slow
     const satLib = await import('satellite.js')
     const satrecMap = new Map()
 
     function propagateNow(satrec) {
       const now = new Date()
       const pv = satLib.propagate(satrec, now)
-      if (!pv.position || pv.position === true) return null
+      // satellite.js can return null (not just { position: false }) when it can't propagate,
+      // so check pv itself before reading pv.position, or it throws.
+      if (!pv || !pv.position || pv.position === true) return null
       const gmst = satLib.gstime(now)
       const gd = satLib.eciToGeodetic(pv.position, gmst)
-      return { lon: satLib.degreesLong(gd.longitude), lat: satLib.degreesLat(gd.latitude), alt: gd.height * 1000 }
+      const lon = satLib.degreesLong(gd.longitude)
+      const lat = satLib.degreesLat(gd.latitude)
+      const alt = gd.height * 1000
+      if (!Number.isFinite(lon) || !Number.isFinite(lat) || !Number.isFinite(alt)) return null
+      return { lon, lat, alt }
     }
 
     try {
@@ -308,41 +325,56 @@ onMounted(async () => {
         if (!pos) continue
         const inclination = parseFloat(tle.line2.substring(8, 16).trim())
         const isISS = tle.satellite_id === '25544'
-        const color = isISS ? Cesium.Color.YELLOW : ACCENT.clone()
+        const color = isISS ? CesiumLib.Color.YELLOW : ACCENT.clone()
         const pixelSize = isISS ? 16 : 13
         const entity = registerEntity(viewer.entities.add({
           name: tle.name,
-          position: Cesium.Cartesian3.fromDegrees(pos.lon, pos.lat, pos.alt),
+          position: CesiumLib.Cartesian3.fromDegrees(pos.lon, pos.lat, pos.alt),
           point: { pixelSize, color: color.clone(), outlineColor: OUTLINE, outlineWidth: 2, scaleByDistance: POINT_SCALE },
-          label: { text: tle.name, font: '13px sans-serif', fillColor: Cesium.Color.WHITE, outlineColor: Cesium.Color.BLACK, outlineWidth: 2, style: Cesium.LabelStyle.FILL_AND_OUTLINE, pixelOffset: new Cesium.Cartesian2(0, -22), distanceDisplayCondition: LABEL_VISIBLE_DISTANCE },
-          properties: new Cesium.PropertyBag({ norad_id: tle.satellite_id, type: 'Satellite', inclination }),
+          label: { text: tle.name, font: '13px sans-serif', fillColor: CesiumLib.Color.WHITE, outlineColor: CesiumLib.Color.BLACK, outlineWidth: 2, style: CesiumLib.LabelStyle.FILL_AND_OUTLINE, pixelOffset: new CesiumLib.Cartesian2(0, -22), distanceDisplayCondition: LABEL_VISIBLE_DISTANCE },
+          properties: new CesiumLib.PropertyBag({ norad_id: tle.satellite_id, type: 'Satellite', inclination }),
         }), pixelSize, color)
         satrecMap.set(entity.id, satrec)
       }
 
-      positionInterval = setInterval(() => {
+      viewer.clock.onTick.addEventListener((clock) => {
+        const cesiumTime = clock.currentTime
+        const jsDate = CesiumLib.JulianDate.toDate(cesiumTime)
         for (const [entityId, satrec] of satrecMap) {
           const entity = viewer?.entities.getById(entityId)
           if (!entity) continue
-          const pos = propagateNow(satrec)
-          if (!pos) continue
-          entity.position = Cesium.Cartesian3.fromDegrees(pos.lon, pos.lat, pos.alt)
+          const pv = satLib.propagate(satrec, jsDate)
+          // At very high clock speeds the date races far past the TLE's valid range, where
+          // satellite.js may return null or a non-finite position. Skip those instead of
+          // letting it crash Cesium's render loop, which stops the whole globe.
+          if (!pv || !pv.position || pv.position === true) continue
+          const gmst = satLib.gstime(jsDate)
+          const gd = satLib.eciToGeodetic(pv.position, gmst)
+          const lon = satLib.degreesLong(gd.longitude)
+          const lat = satLib.degreesLat(gd.latitude)
+          const alt = gd.height * 1000
+          if (!Number.isFinite(lon) || !Number.isFinite(lat) || !Number.isFinite(alt)) continue
+          // We just set the satellite's position directly every update instead of giving Cesium a schedule to smoothly animate between.
+          // We're already recalculating the exact spot ourselves each time.
+          entity.position = new CesiumLib.ConstantPositionProperty(
+            CesiumLib.Cartesian3.fromDegrees(lon, lat, alt)
+          )
         }
-      }, 5000)
+      })
     } catch (err) {
       console.warn('[GlobeEmbed] TLE API unavailable, showing ground stations only:', err.message)
     }
 
     viewer.camera.setView({
-      destination: Cesium.Cartesian3.fromDegrees(0, 20, 20000000),
-      orientation: { heading: 0, pitch: -Cesium.Math.PI_OVER_TWO, roll: 0 },
+      destination: CesiumLib.Cartesian3.fromDegrees(0, 20, 20000000),
+      orientation: { heading: 0, pitch: -CesiumLib.Math.PI_OVER_TWO, roll: 0 },
     })
 
-    handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas)
+    handler = new CesiumLib.ScreenSpaceEventHandler(viewer.scene.canvas)
 
     handler.setInputAction((click) => {
       const picked = viewer.scene.pick(click.position)
-      if (Cesium.defined(picked) && Cesium.defined(picked.id)) {
+      if (CesiumLib.defined(picked) && CesiumLib.defined(picked.id)) {
         applySelection(picked.id)
       } else {
         restoreAll()
@@ -351,11 +383,11 @@ onMounted(async () => {
         selectedEntity.value = null
         searchQuery.value = ''
       }
-    }, Cesium.ScreenSpaceEventType.LEFT_CLICK)
+    }, CesiumLib.ScreenSpaceEventType.LEFT_CLICK)
 
     handler.setInputAction((movement) => {
       const picked = viewer.scene.pick(movement.endPosition)
-      const pickedEntity = (Cesium.defined(picked) && Cesium.defined(picked.id)) ? picked.id : null
+      const pickedEntity = (CesiumLib.defined(picked) && CesiumLib.defined(picked.id)) ? picked.id : null
       const pickedId = pickedEntity?.id ?? null
 
       if (pickedEntity && pickedId !== selectedEntityId) {
@@ -364,6 +396,8 @@ onMounted(async () => {
         tooltip.value.visible = false
       }
 
+      // Skip the rest if the mouse is still over the same satellite as before.
+      // This code runs constantly as you move the mouse, so without this check we'd be redrawing things for no reason.
       if (pickedId === lastHoveredId) return
 
       if (lastHoveredId !== null) {
@@ -383,7 +417,7 @@ onMounted(async () => {
       }
 
       lastHoveredId = pickedId
-    }, Cesium.ScreenSpaceEventType.MOUSE_MOVE)
+    }, CesiumLib.ScreenSpaceEventType.MOUSE_MOVE)
 
   } catch (err) {
     loadingError.value = `Failed to load Cesium: ${err?.message ?? err}`
@@ -392,7 +426,6 @@ onMounted(async () => {
 })
 
 onUnmounted(() => {
-  clearInterval(positionInterval)
   handler?.destroy()
   if (viewer && !viewer.isDestroyed()) viewer.destroy()
 })
@@ -471,8 +504,8 @@ onUnmounted(() => {
 
 .info-panel {
   position: absolute;
-  bottom: 16px;
-  left: 16px;
+  bottom: 45px;
+  right: 16px;
   width: 240px;
   background: rgba(14, 14, 24, 0.92);
   border: 1px solid rgba(107, 216, 255, 0.3);

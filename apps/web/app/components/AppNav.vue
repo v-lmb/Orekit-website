@@ -22,7 +22,7 @@
               <span class="di-title">Technical documentation</span>
               <span class="di-desc">Architecture and Maven site</span>
             </NuxtLink>
-            <NuxtLink to="/tutorials" class="dropdown-item">
+            <NuxtLink to="/doc-tutorials" class="dropdown-item">
               <span class="di-title">Tutorials</span>
               <span class="di-desc">Step-by-step examples</span>
             </NuxtLink>
@@ -54,10 +54,10 @@
               <span class="di-title">Forum</span>
               <span class="di-desc">Ask questions and share solutions</span>
             </a>
-            <NuxtLink to="/community" class="dropdown-item">
+            <a href="https://www.orekit.org/site-orekit-latest/contributing.html" target="_blank" rel="noopener" class="dropdown-item">
               <span class="di-title">How to contribute?</span>
               <span class="di-desc">Guide to contributing to Orekit</span>
-            </NuxtLink>
+            </a>
             <a href="https://gitlab.orekit.org/orekit/orekit/-/issues" target="_blank" rel="noopener" class="dropdown-item">
               <span class="di-title">Bug tracker</span>
               <span class="di-desc">Report issues on GitLab</span>
