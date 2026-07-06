@@ -486,3 +486,11 @@ See [`docs/load-test.md`](load-test.md)
 | slowapi rate limiting | Prevents abuse on public read-only endpoints (S-3) |
 | Non-root Dockerfile | Reduces container privilege footprint (S-9) |
 | GitHub Actions CI | lint -> test -> build pipeline; image published to ghcr.io |
+
+---
+
+## Acknowledgements
+
+Special thanks to **Vincent CUCCHIETTI**, maintainer of the Orekit project, for his availability, technical guidance, and trust in letting us redesign the official website.
+Thanks to the **Orekit community** for building and maintaining an exceptional open source astrodynamics library that made this project meaningful.
+Thanks to the **Holberton School team**, staff and peers, for their support and feedback throughout the project.
