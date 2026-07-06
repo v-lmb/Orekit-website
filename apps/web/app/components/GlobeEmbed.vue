@@ -302,10 +302,16 @@ onMounted(async () => {
     function propagateNow(satrec) {
       const now = new Date()
       const pv = satLib.propagate(satrec, now)
-      if (!pv.position || pv.position === true) return null
+      // satellite.js can return null (not just { position: false }) when it can't propagate,
+      // so check pv itself before reading pv.position, or it throws.
+      if (!pv || !pv.position || pv.position === true) return null
       const gmst = satLib.gstime(now)
       const gd = satLib.eciToGeodetic(pv.position, gmst)
-      return { lon: satLib.degreesLong(gd.longitude), lat: satLib.degreesLat(gd.latitude), alt: gd.height * 1000 }
+      const lon = satLib.degreesLong(gd.longitude)
+      const lat = satLib.degreesLat(gd.latitude)
+      const alt = gd.height * 1000
+      if (!Number.isFinite(lon) || !Number.isFinite(lat) || !Number.isFinite(alt)) return null
+      return { lon, lat, alt }
     }
 
     try {
@@ -338,12 +344,16 @@ onMounted(async () => {
           const entity = viewer?.entities.getById(entityId)
           if (!entity) continue
           const pv = satLib.propagate(satrec, jsDate)
-          if (!pv.position || pv.position === true) continue
+          // At very high clock speeds the date races far past the TLE's valid range, where
+          // satellite.js may return null or a non-finite position. Skip those instead of
+          // letting it crash Cesium's render loop, which stops the whole globe.
+          if (!pv || !pv.position || pv.position === true) continue
           const gmst = satLib.gstime(jsDate)
           const gd = satLib.eciToGeodetic(pv.position, gmst)
           const lon = satLib.degreesLong(gd.longitude)
           const lat = satLib.degreesLat(gd.latitude)
           const alt = gd.height * 1000
+          if (!Number.isFinite(lon) || !Number.isFinite(lat) || !Number.isFinite(alt)) continue
           // We just set the satellite's position directly every update instead of giving Cesium a schedule to smoothly animate between.
           // We're already recalculating the exact spot ourselves each time.
           entity.position = new CesiumLib.ConstantPositionProperty(
